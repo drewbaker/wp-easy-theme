@@ -114,15 +114,18 @@ $el.click(()=>{
 
 # TODO
 
-- Script tags, $el, $store...
-- Some nice patterns and a helper on how to observe state, to encourage that approch to JS... Thinking something like `$store.watch('menuOpened', callback())`
+- Explain SFC script tags, $el, $store...
+- Router params and route name... `get_route_name()` and `get_route_params()` would be useful.
+- Some nice patterns and a helper on how to observe state, to encourage reactive approach to JS but keep it easy... Thinking something like `$store.watch('menuOpened', (newVal, oldVal)=>{})`
 - Fonts
 - SVGs
-- How to include 3rd part scripts nicely?
-- functions.php file
-- What about `html_classes()`
-- Router classes...
-- How to use theme.css approch...
-- Nested CSS: https://github.com/sed-seyedi/nested-css
+- How to include 3rd party scripts easily?
+- What do we use functions.php file for?
+  - Include some useful utils? `is_in_tree('slug'), has_children()`
+  - Include some logic for using theme.css
+- What about `html_classes()`, current best practices is to use budy for classes. Should we put `body_classes()` on `<html>`?
+  - Auto Route name as class to `html`...
+- How to use theme.css best practice...
+- Nested CSS: https://github.com/sed-seyedi/nested-css or https://scssphp.github.io/scssphp/
 - - What about scoping CSS?
 - - How to deal with >>> deep selectors?
