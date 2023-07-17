@@ -129,3 +129,6 @@ $el.click(()=>{
 - Nested CSS: https://github.com/sed-seyedi/nested-css or https://scssphp.github.io/scssphp/
 - - What about scoping CSS?
 - - How to deal with >>> deep selectors?
+- Something to add basic open graph tags
+- Handle auto load of favicon if present
+- Could we map `/public` to serve files like there are in root?
