@@ -118,7 +118,7 @@ $el.click(()=>{
 - Router params and route name... `get_route_name()` and `get_route_params()` would be useful.
 - Some nice patterns and a helper on how to observe state, to encourage reactive approach to JS but keep it easy... Thinking something like `$store.watch('menuOpened', (newVal, oldVal)=>{})`
 - Fonts
-- SVGs
+- SVGs (could we run through SVGO?)
 - How to include 3rd party scripts easily?
 - What do we use functions.php file for?
   - Include some useful utils? `is_in_tree('slug'), has_children()`
