@@ -110,3 +110,16 @@ $el.click(()=>{
 })
 <script>
 ```
+
+
+# TODO
+
+- Script tags, $el, $store...
+- Some nice patterns and a helper on how to observe state, to encourage that approch to JS... Thinking something like `$store.watch('menuOpened', callback())`
+- Fonts
+- SVGs
+- How to include 3rd part scripts nicely?
+- functions.php file
+- What about `html_classes()`
+- Router classes...
+- How to use theme.css approch...
