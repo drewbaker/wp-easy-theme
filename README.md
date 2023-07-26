@@ -17,10 +17,11 @@ Once you've installed the plugin, you'll want to create a folder structure in yo
 ```
 /my-theme
   /pages
-    /index.php <-- This file will be used as the template when a visitng the sites home page
+    /page.php <-- This file will be used as the template when a visitng the sites home page
     /work
-      index.php <-- This file will be used as the template when a visitng /work/
-      _detail.php <-- This file will be used as the template when a visitng /work/example/
+      page.php <-- This file will be used as the template when a visiting /work/
+      _foo.php <-- This file will be used as the template when a visiting /work/bar/ or /work/bar/ etc...
+      /baz/page.php <-- This is the list view for`/work/baz/`
 ```
 
 ### Site global layout
