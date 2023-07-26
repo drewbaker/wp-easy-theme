@@ -112,6 +112,51 @@ $el.click(()=>{
 <script>
 ```
 
+### CSS
+
+The single file component's CSS is scoped. What that means is, the CSS rules won't pollute other other parts of your site.
+
+How it does that is by automatically transforming your style block, like this:
+
+```
+<style>
+/* Some CSS here */
+.my-component {
+  .meta {
+    background: red;  
+  }
+}
+</style>
+```
+
+Into this:
+```
+<style>
+/* Some CSS here */
+.my-component[data-wpe-my-component] {
+  .meta {
+    background: red;  
+  }
+}
+</style>
+```
+
+In the rare cases where you want your component to style it's children, you can use the SASS deep `>>>` selector, like this:
+
+```
+<style>
+/* Some CSS here */
+.my-component {
+  .meta {
+    background: red;  
+  }
+  >>> .child {
+    background: green;
+  }
+}
+</style>
+```
+
 
 # TODO
 
