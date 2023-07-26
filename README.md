@@ -18,6 +18,7 @@ Once you've installed the plugin, you'll want to create a folder structure in yo
 /my-theme
   /pages
     /page.php <-- This file will be used as the template when a visitng the sites home page
+    /fallback.php <-- This file is used if nothing matches
     /work
       page.php <-- This file will be used as the template when a visiting /work/
       _foo.php <-- This file will be used as the template when a visiting /work/bar/ or /work/bar/ etc...
