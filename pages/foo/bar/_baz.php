@@ -1,0 +1,1 @@
+<?php use_template('foobar') ?>
