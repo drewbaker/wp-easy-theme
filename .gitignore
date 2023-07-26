@@ -1,0 +1,7 @@
+vendor/
+.env
+.phpcs.xml
+phpstan.neon
+composer.lock
+
+# @todo

@@ -1,0 +1,6 @@
+vendor/
+.env
+.phpcs.xml
+phpstan.neon
+
+# @todo
