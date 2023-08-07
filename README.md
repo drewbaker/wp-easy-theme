@@ -43,7 +43,7 @@ The releveant page template is insterted into a global layout, so that things li
   /layout.php
 ```
 
-This file will contain the following code as a minimum.
+This file will contain the following code as a minimum.  Note the `wp_head()` and `wp_footer()` functions are default WordPress functions and allow things like 3rd party plugins to work, or `wp-easy` to know where to insert scripts etc.
 
 ```
 <!DOCTYPE html>
@@ -54,6 +54,27 @@ This file will contain the following code as a minimum.
 
     <body <?php body_class(); ?>>
         <?php page_outlet(); ?> <!-- The requested page template from the `/pages` directory will be rendered here.
+        
+        <?php wp_footer(); ?>
+    </body>
+</html>
+```
+
+But often times you'll want to do something like this to include a header on every page.
+
+```
+<html <?php language_attributes(); ?> <?php html_class(); ?>>
+    <head>
+        <?php wp_head();?>
+    </head>
+
+    <body <?php body_class(['layout']); ?>>
+    
+        <?php use_component('header'); ?>
+
+        <?php page_outlet();?>
+
+        <?php wp_footer(); ?>
     </body>
 </html>
 ```
