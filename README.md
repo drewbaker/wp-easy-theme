@@ -1,10 +1,16 @@
 # wp-easy
 
-A framework for building modern WordPress themes, but make it easy.
+A plugin that provides a framework for building modern WordPress themes, but make it easy.
 
 wp-easy takes a lot of inspiration from modern JS frameworks, but keeps everything server side with PHP just like you are used to. The goal is to make building PHP templates for WordPress a more enjoyable experience for beginners, but also encourage them to build with a more modern approach. We've tried to balance coding "best practices" with performance and ease of use.
 
 The main inovation of wp-easy is to introduce the concept of single-file-components into WP theme building, and directory based template routing. 
+
+## Use cases
+
+- You're new to PHP, but have an understanding of JS frameworks
+- You've got the basics down of PHP "the WordPress way", but you want to level up to building sites the "right way" without having to be a full PHP wizard.
+- You've mastered WordPress and PHP, and you want to build an easy theme quickly without having to managed a ton of dependecies or complexity (otherwise you could use Roots.io)
 
 ## Install
 
@@ -21,9 +27,12 @@ Once you've installed the plugin, you'll want to create a folder structure in yo
     /fallback.php <-- This file is used if nothing matches
     /work
       page.php <-- This file will be used as the template when a visiting /work/
-      _foo.php <-- This file will be used as the template when a visiting /work/bar/ or /work/bar/ etc...
+      _foo.php <-- This file will be used as the template when a visiting /work/bar/ or /work/boo/ etc...
       /baz/page.php <-- This is the list view for`/work/baz/`
 ```
+
+Pages work like the same as components, but they have `$post` automatically available. They are included into where `page_outlet()` is called in the `layout.php` file depending on the route.
+
 
 ### Site global layout
 
@@ -49,19 +58,13 @@ This file will contain the following code as a minimum.
 </html>
 ```
 
-### Page templates
+### Reusing templates
 
-TODO Explain where page templates live, and how to re-use theme.
-
-```
-<div class="page">
-    Whatever I want...
-</div>
-```
+If you want to reuse a page template at multple routes, your should place the template in `/templates` and then in the `/pages/foo.php` file simply call `use_template('foobar')` where `foobar` is `/templates/foobar.php`
 
 ### Components
 
-You should create a `components` directory, and keep all your components in here.
+You should create a `/components` directory, and keep all your components in here.
 
 ```
 /my-theme
@@ -113,11 +116,19 @@ $el.click(()=>{
 <script>
 ```
 
+For now, the prop syntax works in two different flavors. 
+
+```
+// basic usage for props
+use_component( 'my-component', [ $post, $text ] ); // The prop names will be the same as the variables.
+
+// custom prop names
+use_component( 'my-component', [ $post, 'cta_text' => $text ] ); // $post and $cta_text will be the variables 
+```
+
 ### CSS
 
-The single file component's CSS is scoped. What that means is, the CSS rules won't pollute other other parts of your site.
-
-How it does that is by automatically transforming your style block, like this:
+CSS used in layouts, pages and components can actually be SCSS, meaning you can nest your CSS rules like this:
 
 ```
 <style>
@@ -130,52 +141,117 @@ How it does that is by automatically transforming your style block, like this:
 </style>
 ```
 
-Into this:
+It is highly recommended that your component file name and your component root CSS class match. 
+
+Your `<style>` block should only ever have one top leve class. 
+
+This is good:
 ```
 <style>
-/* Some CSS here */
-.my-component[data-wpe-my-component] {
-  .meta {
-    background: red;  
-  }
-}
-</style>
-```
-
-In the rare cases where you want your component to style it's children, you can use the SASS deep `>>>` selector, like this:
-
-```
-<style>
-/* Some CSS here */
 .my-component {
   .meta {
     background: red;  
   }
-  >>> .child {
-    background: green;
-  }
 }
 </style>
 ```
 
+This is bad and won't work:
+```
+<style>
+/* This is bad */
+.my-component {
+  font-size: 20px;
+}
+.meta {
+  background: red;  
+}
+</style>
+```
+
+#### CSS files
+
+If you want to load complete style sheets, then these should live in `/my-theme/styles` and the order they are loaded is defined in `wp-easy.config.php` file, like this:
+
+```
+<?php
+wp_easy_config([
+    'styles' => [
+        '/styles/global.scss',
+        '/styles/fonts.css'
+    ],
+])
+?>
+```
+
+### Fonts
+
+Font files should live in `/public/fonts` and then be loaded using `@font-face` rules in the `/styles/font.css` file.
+
+### SVGs
+
+SVGs can be placed in `/public/svgs` and used in your files using `use_svg('svg-file-name')`. SVGs will be optimized, leaving in ID, class and viewbox attributes.
+
+### Scripts
+
+You should place external scripts in `/my-theme/scripts` and can be loaded in a specific order in `wp-easy.config.php`.
+
+For example, here is loading an external jQuery script and an internal `/my-theme/scripts/somefile.js` script.
+
+```
+<?php
+wp_easy_config([
+    'styles' => [
+        '/styles/global.scss',
+        '/styles/fonts.css'
+    ],
+    'scripts' => [
+      [
+        'id'    => 'somefile',
+        'src'   => '/scripts/somefile.js'
+      ],
+      [
+        'id'    => 'jquery',
+        'async' => true,
+        'defer' => true,
+        'src'   => 'https://code.jquery.com/jquery-3.7.0.slim.min.js'
+      ],      
+    ]
+])
+?>
+```
+
+### Utility functions
+
+The plugin enables a few useful common functions.
+
+#### get_route_name()
+`get_route_name()` this takes no arguments, returns a string of the resolved route name. This name is also added to the `<html>` element prefixed like `route-${route-name-here}`
+
+#### get_route_params()
+`get_route_params()` takes no arguments, and returns an array of route params found in the URL. A route param is basically anything in your page directory that has an `_` in it.
+
+For example, if you have a page structure like `/my-theme/pages/cars/_foo/_bar` and some visit the URL `/work/cars/bmw/m3` then `get_route_params()` will return `['foo' => 'bmw', 'bar' => 'm3']`.
+
+### Open graph tags
+
+The theme will auto generate basic open graph tags for you.
+
+### Custom functions
+
+If you want to add your own custom PHP or WordPress functions, you can use `/my-theme/functions.php` just like any other WordPress theme. Copy-paste away!
+
+### Favicon
+
+Place your favicon in `/my-theme/public/images/favicon.*` and it will be automatically added to you site code.
 
 # TODO
 
 - Explain SFC script tags, $el, $store...
-- Router params and route name... `get_route_name()` and `get_route_params()` would be useful.
-- Some nice patterns and a helper on how to observe state, to encourage reactive approach to JS but keep it easy... Thinking something like `$store.watch('menuOpened', (newVal, oldVal)=>{})`
-- Fonts
-- SVGs (could we run through SVGO?)
-- How to include 3rd party scripts easily?
-- What do we use functions.php file for?
-  - Include some useful utils? `is_in_tree('slug'), has_children()`
-  - Include some logic for using theme.css
-- What about `html_classes()`, current best practices is to use budy for classes. Should we put `body_classes()` on `<html>`?
-  - Auto Route name as class to `html`...
+- Provide some nice patterns and a helper on how to observe state, to encourage reactive approach to JS but keep it easy... Thinking something like `$store.watch('menuOpened', (newVal, oldVal)=>{})`
+- What about `html_classes()`, current best practices is to use html for classes and avoid body. Should we put `body_classes()` on `<html>`?
 - How to use theme.css best practice...
-- Nested CSS: https://github.com/sed-seyedi/nested-css or https://scssphp.github.io/scssphp/
-- - What about scoping CSS?
-- - How to deal with >>> deep selectors?
-- Something to add basic open graph tags
-- Handle auto load of favicon if present
-- Could we map `/public` to serve files like there are in root?
+- Nested CSS: 
+  - https://github.com/sed-seyedi/nested-css
+  - https://scssphp.github.io/scssphp/
+  - https://github.com/Ed-ITSolutions/wp_enqueue_less
