@@ -10,6 +10,7 @@
 - How to do better JS?
     - Intersection Obververs?
     - Component JS files?
+- Template styles?
 - Move components to each to thier own directory...? With template, JS and CSS files?
 
 - Upgrade router
