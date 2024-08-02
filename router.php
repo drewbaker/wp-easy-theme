@@ -1,11 +1,9 @@
 <?php
-require_once get_template_directory() . '/libs/Router.php';
-
-$router = new MakeitWorkPress\WP_Router\Router( 
+// SEE https://github.com/makeitworkpress/wp-router
+$router = new MakeitWorkPress\WP_Router\Router(
     [
-        'home'    => ['route' => ''],
+        //'home'    => ['route' => ''],
+        'work-detail'    => ['route' => 'work/[a-zA-Z]'],
         'work'    => ['route' => 'work/'],
     ]
 );
-
-?>

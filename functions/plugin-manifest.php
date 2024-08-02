@@ -1,12 +1,10 @@
 <?php
 /**
  * This file handles the required plugins for the theme.
- *
- * @package fuxt-backend
  */
 
 // Require tgm plugin.
-require_once get_template_directory() . '/libs/class-tgm-plugin-activation.php';
+require_once get_template_directory() . '/functions/libs/class-tgm-plugin-activation.php';
 
 /**
  * Register required plugins for the theme.
@@ -32,6 +30,7 @@ function fuxt_register_required_plugins() {
 			'name'    => 'SCSS-Library',
 			'slug'    => 'scss-library',
 			'version' => '0.4.1',
+			'required'     => true,
 		),
 		// array(
 		// 	'name'         => 'Advanced Custom Fields Pro',
