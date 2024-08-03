@@ -5,7 +5,6 @@
 - Make it a plugin not a theme
 
 ## DREW'S TODO
-- Open Graph tags
 - How to do better JS?
     - Intersection Obververs?
     - Component JS files/modules?

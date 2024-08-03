@@ -40,7 +40,7 @@ function wp_easy_router($routes)
         // Set our custom query var
         set_query_var('template', $template_name);
         return $template;
-    }, 10);
+    }, 1);
 }
 
 // Add custom body classes to the front-end of our application so we can style accordingly.
