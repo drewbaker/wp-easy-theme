@@ -1,5 +1,5 @@
-<?php use_header(); ?>
+<?php use_component('header'); ?>
 
 Reel template here
 
-<?php use_footer(); ?>
+<?php use_component('footer'); ?>

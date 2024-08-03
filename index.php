@@ -1,2 +1,5 @@
-<!-- Not used. TODO Should the router go here instead? -->
-Index.php file
+<?php
+
+?>
+
+The router.php file had no matching route. This is the fallback template.

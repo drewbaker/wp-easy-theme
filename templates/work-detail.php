@@ -1,6 +1,6 @@
 <!-- Would be so great if we could extract this template/script/style tags into separate files and then equeue them. -->
 <template>
-    <?php use_header(); ?>
+    <?php use_component('header'); ?>
 
     <main class="work-detail">
 
@@ -8,7 +8,7 @@
 
     </main>
 
-    <?php use_footer(); ?>
+    <?php use_component('fotter'); ?>
 </template>
 
 <script type="module">

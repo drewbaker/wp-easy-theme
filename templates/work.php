@@ -1,8 +1,9 @@
-<?php use_header(); ?>
+<?php use_component('header'); ?>
 
 <main class="work">
 
     Work template
+    <?php var_dump(get_route_name()); ?>
 
     <?php use_component('work-block', ['title' => 'test of title prop']); ?>
 
@@ -14,4 +15,4 @@
 
 </main>
 
-<?php use_footer(); ?>
+<?php use_component('footer'); ?>
