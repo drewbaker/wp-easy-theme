@@ -188,6 +188,7 @@ TODO Document how fonts work
 
 TODO Document anything else left over
 
+- Open graph tags
 - Note things I turned off as out of scope
     - comments
     - emojis
