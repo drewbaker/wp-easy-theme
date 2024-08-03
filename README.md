@@ -1,278 +1,217 @@
-# wp-easy
+# WP Easy - A framework for a modern WordPress theme, but make it easy. 
 
-A plugin that provides a framework for building modern WordPress themes, but make it easy.
+Build a modern WordPress theme, but without any of the hassle of modern frontend development. Easy to use, but respecting best practices.
 
-wp-easy takes a lot of inspiration from modern JS frameworks, but keeps everything server side with PHP just like you are used to. The goal is to make building PHP templates for WordPress a more enjoyable experience for beginners, but also encourage them to build with a more modern approach. We've tried to balance coding "best practices" with performance and ease of use.
+## Features
 
-The main inovation of wp-easy is to introduce the concept of single-file-components into WP theme building, and directory based template routing. 
+- No build step
+- Flexible reusable template routing
+- Reusable component based approach
+- SVG support built in
+- SCSS support
+- Font loading (local fonts, Adobe, Google and more)
+- Opinionated strucutre, so you stick to best practices 
 
-## Use cases
+## Why
 
-- You're new to PHP, but have an understanding of JS frameworks
-- You've got the basics down of PHP "the WordPress way", but you want to level up to building sites the "right way" without having to be a full PHP wizard.
-- You've mastered WordPress and PHP, and you want to build an easy theme quickly without having to managed a ton of dependecies or complexity (otherwise you could use Roots.io)
+This theme framework is aimed at people who understand the basics of HTML/CSS/JS, but don't want to deal with the mess that modern frontend development has become. There is no build step. You don't need to now how to use terminal. Don't know what `npm` is? No problem, don't need it!
 
-## Install
+I built this theme framework so that my brother (an amazing graphic designer) could build themes purely through his FTP based code editor. He knows HTML and CSS really well, he doesn't know JS, but he does know jQuery. In my experince, this is common for people that's have a job tangental to frontend web development - designers, copywriters, project managers and backend engineers.
 
-1. Install the wp-easy plugin
+My brother does want to learn, and he wants to build websites as close to the "right" way as possible. So I've attempted to create a framework that pushes him in a more modern direction. Component based. JS modules, SCSS (PostCSS not being possible server side just yet) and template routing.
 
-### Directory based routing
+## Documentation
 
-Once you've installed the plugin, you'll want to create a folder structure in your theme directory. Each directory will have some related automatic features enabled. These are explained more below, but to start you'll want to create a `pages` directory. This direcotry serves as a template routing structure, similiar to frontend frameworks like Nuxt.
+### Router
 
-```
-/my-theme
-  /pages
-    /page.php <-- This file will be used as the template when a visitng the sites home page
-    /fallback.php <-- This file is used if nothing matches
-    /work
-      page.php <-- This file will be used as the template when a visiting /work/
-      _foo.php <-- This file will be used as the template when a visiting /work/bar/ or /work/boo/ etc...
-      /baz/page.php <-- This is the list view for`/work/baz/`
-```
+The entry point for most people will be `/router.php`. This file determines what template is shown to the user. Templates are located in the theme's `/templates` directory.
 
-Pages work like the same as components, but they have `$post` automatically available. They are included into where `page_outlet()` is called in the `layout.php` file depending on the route.
+You should setup your page and post's in the WordPress dashboard as you normally would. Enable `Pretty Permalinks`. The in `/router.php` you can map out the templates you want to use depending on the URLs you want your site to support.
 
-
-### Site global layout
-
-The releveant page template is insterted into a global layout, so that things like the Header and Footer don't need to be included in every page template.
+For example:
 
 ```
-/my-theme
-  /layout.php
+wp_easy_router([
+    'home'          => ['path' => '/'],                                     // Will display the /template/home.php file
+    'work'          => ['path' => '/work/'],                                // Will display the /template/work.php file
+    'work-detail'   => ['path' => '/work/:spot/', 'template' => 'work'],    // Will display the /template/work.php file also
+    'reel'          => ['path' => '/reel/'],                                // Will display the /template/reel.php file
+    'article'       => ['path' => '/:article'],                             // Will display the /template/article.php file
+]);
 ```
 
-This file will contain the following code as a minimum.  Note the `wp_head()` and `wp_footer()` functions are default WordPress functions and allow things like 3rd party plugins to work, or `wp-easy` to know where to insert scripts etc.
+This syntax is similar to Node's Express path syntax. The key `home` is the route name, and the value is an array of `[path, template]`. The `path` is the URI you are trying to match to. The `template` is optional, and allows you to reuse the same template for multiple routes. If no template set, the key is used as the template name.
+
+The router has a helper function `get_route_name()` that you can use to get the current active templates name.
+
+### Templates & Components
+
+Templates and components work very similary. The best way to think of theme is that you are building a website like a jigsaw puzzle. The components are each a peice of the puzzle. A template is where all the indervidual pieces (components) are put together.
+
+- Templates are located in the theme's `/templates` directory.
+- Components are located in the theme's `/component` directory.
+
+A template or a component will always have `.php` file, that determines the HTML and strucutre. It will have an optional `.scss` or `.css` file for the styles that go with it, and an optional `.js` file for any specific JavaScript that is needed for that template or component. They are loaded automatically whenever you use a template or a component.
+
+#### Templates
+
+Your `/templates/work.php` might look something like this:
 
 ```
-<!DOCTYPE html>
-<html <?php language_attributes(); ?> <?php html_class(); ?>>
-    <head>
-        <?php wp_head();?>
-    </head>
+<?php use_component('header'); ?>
 
-    <body <?php body_class(); ?>>
-        <?php page_outlet(); ?> <!-- The requested page template from the `/pages` directory will be rendered here.
+<main class="work">
+    <?php use_component('work-block', ['title' => 'test of title argument']); ?>
+</main>
+
+<?php use_component('footer'); ?>
+```
+
+The framework will also load `/templates/work.scss` or `/templates/work.css`, and `/templates/work.js` if those files are present. These should be used for styles and JS that are specific and isolated only to this component. If you have global styles if JS that you need, the you can use the `/styles/main.scss` and `/js/main.js` files for these.
+
+#### Components
+
+Components are one of the central reasons this framework exists. They are very powerful once you get the hang of it.
+
+In the above template example you'll see: 
+
+```
+<?php use_component('work-block', ['title' => 'Test of title argument']); ?>
+``` 
+
+What this is doing is similar to the WordPress function `get_template_part()`, it's loading in a reusable chunk of HTML (and PHP) code.
+
+For exmaple, the `/components/work-block.php` component might look like this:
+
+```
+<?php
+// Set default args for the component
+$args = set_defaults($args, [
+    'title' => 'Title default here',
+]);
+?>
+
+<div class="work-block">
+    <h2 class="title">
+        <?php echo $args['title']; ?>
+    </h2>
+</div>
+```
+
+It's storngly recommend that you take the approch of keeping your components as isolated as possible. Meaning, that they only know data that is passed into them. So doing something like this is correct:
+
+```
+<?php use_component('work-block', ['title' => get_the_title()]); ?>
+```
+
+Each component can have it's own `.scss` or `.css` file, and a `.js` file. They are loaded automatically once, whenever the component is used. 
+
+For example, `/components/work-block.scss` file might look like this:
+
+```
+@import '../styles/media-queries';
+
+// Highly recommended that you namespace each component's CSS like this. Match the filename to the class!
+.work-block {
+    background-color: red;
+
+    .title {
+        color: blue;
+    }
+
+    // Media queries can be used like this, this will make the title black on phones
+    @media #{$lt-phone} {
+        background-color: yellow;
         
-        <?php wp_footer(); ?>
-    </body>
-</html>
-```
-
-But often times you'll want to do something like this to include a header on every page.
-
-```
-<html <?php language_attributes(); ?> <?php html_class(); ?>>
-    <head>
-        <?php wp_head();?>
-    </head>
-
-    <body <?php body_class(['layout']); ?>>
-    
-        <?php use_component('header'); ?>
-
-        <?php page_outlet();?>
-
-        <?php wp_footer(); ?>
-    </body>
-</html>
-```
-
-### Reusing templates
-
-If you want to reuse a page template at multple routes, your should place the template in `/templates` and then in the `/pages/foo.php` file simply call `use_template('foobar')` where `foobar` is `/templates/foobar.php`
-
-### Components
-
-You should create a `/components` directory, and keep all your components in here.
-
-```
-/my-theme
-  /components
-    /my-component.php
-```
-
-If you are not sure what a "component" is, the general idea is that they are isolated re-usable templates of code that don't know anything about their outside surroundings. So you have to "pass in" properties to them. It's easier to udnerstand if you see them in action...
-
-So a page template might use the above `my-component` like this:
-
-```
-<div class="page">
-    <?php use_component('my-component', ['post' => $post, 'text' => 'Some text']); ?>
-</div>
-```
-
-And then the component might look like this:
-
-```
-<?php
-// Do some PHP code here if you need
-// `$props` comes from the array passed in via the `use_component` function in the page template. 
-$meta = $props['post']->some_meta_field;
-?>
-
-<div class="my-component">
-  <?php echo $props['text']; ?>
-
-  <div class="meta">
-    <?php echo $meta; ?>
-  </div>
-</div>
-
-<style>
-/* Some CSS here */
-.my-component {
-  .meta {
-    background: red;  
-  }
+        .title {
+            color: var(--color-black); // This is how you use native CSS variables that are defined in /styles/varibles.scss
+        }
+    }   
 }
-</style>
-
-<script>
-// This would be sick! But not required...
-$el.click(()=>{
-    console.log('I was clicked on')
-})
-<script>
 ```
 
-For now, the prop syntax works in two different flavors. 
+So this is `SCSS`, it's an extended version of the `CSS` you've seen before. It's big advanatge is it allows for nesting, and varibles. Native CSS allows for varibles nativly too, those are better and are used in `/styles/varibles.scss`, but some advanced varibles like the media-query one used in the example can't be used with native CSS vars. 
 
-```
-// basic usage for props
-use_component( 'my-component', [ $post, $text ] ); // The prop names will be the same as the variables.
+Nesting is coming to native CSS too eventually, but for now the SCSS synatx is easier to use. You can read about how [nesting works here](https://sass-lang.com/guide/#nesting).
 
-// custom prop names
-use_component( 'my-component', [ $post, 'cta_text' => $text ] ); // $post and $cta_text will be the variables 
-```
+The `@media #{$lt-phone}` is a custom media query defined in the `/styles/media-queries.scss` file. There are a few more ones defined there that will come in real handy for styling a component for different screen sizes. Note the `@import '../styles/media-queries';` statment at the top of the file, that is important (NOTE: one day I'd like to remove that as a requirment but for now you need it).
 
-### CSS
+### Global Styles & Scripts
 
-CSS used in layouts, pages and components can actually be SCSS, meaning you can nest your CSS rules like this:
+TODO Document how these work
 
-```
-<style>
-/* Some CSS here */
-.my-component {
-  .meta {
-    background: red;  
-  }
-}
-</style>
-```
+- Global CSS vars and media-queries
 
-It is highly recommended that your component file name and your component root CSS class match. 
+### SCSS
 
-Your `<style>` block should only ever have one top leve class. 
-
-This is good:
-```
-<style>
-.my-component {
-  .meta {
-    background: red;  
-  }
-}
-</style>
-```
-
-This is bad and won't work:
-```
-<style>
-/* This is bad */
-.my-component {
-  font-size: 20px;
-}
-.meta {
-  background: red;  
-}
-</style>
-```
-
-#### CSS files
-
-If you want to load complete style sheets, then these should live in `/my-theme/styles` and the order they are loaded is defined in `wp-easy.config.php` file, like this:
-
-```
-<?php
-wp_easy_config([
-    'styles' => [
-        '/styles/global.scss',
-        '/styles/fonts.css'
-    ],
-])
-?>
-```
-
-### Fonts
-
-Font files should live in `/public/fonts` and then be loaded using `@font-face` rules in the `/styles/font.css` file.
+TODO Document how SCSS work
 
 ### SVGs
 
-SVGs can be placed in `/public/svgs` and used in your files using `use_svg('svg-file-name')`. SVGs will be optimized, leaving in ID, class and viewbox attributes.
+`<img>` that are really SVGs are converted to `<svg>` on page load automatically. Just add `data-svg` to any `<img>` tag and it will load the underlying SVG and replace the `<img>`. This allows you to style SVGs in CSS.
 
-### Scripts
-
-You should place external scripts in `/my-theme/scripts` and can be loaded in a specific order in `wp-easy.config.php`.
-
-For example, here is loading an external jQuery script and an internal `/my-theme/scripts/somefile.js` script.
+For example, this:
 
 ```
-<?php
-wp_easy_config([
-    'styles' => [
-        '/styles/global.scss',
-        '/styles/fonts.css'
-    ],
-    'scripts' => [
-      [
-        'id'    => 'somefile',
-        'src'   => '/scripts/somefile.js'
-      ],
-      [
-        'id'    => 'jquery',
-        'async' => true,
-        'defer' => true,
-        'src'   => 'https://code.jquery.com/jquery-3.7.0.slim.min.js'
-      ],      
-    ]
-])
-?>
+<img data-svg class="svg" src="<?php echo get_template_directory_uri(); ?>/images/logo.svg">
 ```
 
-### Utility functions
+Will be turned into this:
+```
+<svg data-svg="replaced" class="svg" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="157.8px" height="20.6px" viewBox="-225.9 375.3 157.8 20.6" xml:space="preserve" >
+    //... SVG contents in here
+</svg>
+```
 
-The plugin enables a few useful common functions.
+All attributes will be carred over also, note how `class="svg"` is added to the SVG for example. Also note that `data-svg="replaced"` is added to the converted SVGs.
 
-#### get_route_name()
-`get_route_name()` this takes no arguments, returns a string of the resolved route name. This name is also added to the `<html>` element prefixed like `route-${route-name-here}`
+Sometimes you might need to re-initlize SVGs, this can be done in JS like so:
 
-#### get_route_params()
-`get_route_params()` takes no arguments, and returns an array of route params found in the URL. A route param is basically anything in your page directory that has an `_` in it.
+```
+import {initSVGs} from "./svgs.js"
+initSVGs()
+```
 
-For example, if you have a page structure like `/my-theme/pages/cars/_foo/_bar` and some visit the URL `/work/cars/bmw/m3` then `get_route_params()` will return `['foo' => 'bmw', 'bar' => 'm3']`.
+### JavaScript
 
-### Open graph tags
+TODO Document how these work
 
-The theme will auto generate basic open graph tags for you.
+- JS and the state, and default event callbacks
+- jQuery
+- Modules
 
-### Custom functions
+### SCSS
 
-If you want to add your own custom PHP or WordPress functions, you can use `/my-theme/functions.php` just like any other WordPress theme. Copy-paste away!
+TODO Document how fonts work
 
-### Favicon
+## Notes
 
-Place your favicon in `/my-theme/public/images/favicon.*` and it will be automatically added to you site code.
+TODO Document anything else left over
 
-# TODO
+- Open graph tags
+- Note things I turned off as out of scope
+    - comments
+    - emojis
 
-- Explain SFC script tags, $el, $store...
-- Provide some nice patterns and a helper on how to observe state, to encourage reactive approach to JS but keep it easy... Thinking something like `$store.watch('menuOpened', (newVal, oldVal)=>{})`
-- What about `html_classes()`, current best practices is to use html for classes and avoid body. Should we put `body_classes()` on `<html>`?
-- How to use theme.css best practice...
-- Nested CSS: 
-  - https://github.com/sed-seyedi/nested-css
-  - https://scssphp.github.io/scssphp/
-  - https://github.com/Ed-ITSolutions/wp_enqueue_less
+## TODO & Roadmap
+- Single file components (and templates). For example, make this work: https://github.com/drewbaker/wp-easy/blob/dev/templates/work-detail.php
+- JS combine & minify
+- SCSS minify and inline
+    - Would be nice if we could auto-load `media-queries` and `variables` into all `.scss` files.
+- Make it a plugin not a theme
+- Make a theme settings panel to control emojis, SVG uploads, etc...
+
+## TODO - Drew's list
+- How to do better JS?
+    - How to get WordPress to generate an ES6 importmap for easier importing of JS
+    - Intersection Obververs?
+    - Infinate scroll/pagination...
+    - Slideshows...
+- Move components so that each is in thier own directory? With template, JS and CSS files grouped? Is this a good idea?
+- Should we use this for page animations? https://swup.js.org/getting-started/example/
+
+# TODO Default components left to build
+- WpImage
+- WpMenu
+- Extend $post object to include post_thumbnail_id. See: https://wordpress.stackexchange.com/a/240051    
+- Example loop page
