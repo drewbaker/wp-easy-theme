@@ -8,5 +8,5 @@
 <body>
 
     <header>
-        <img class="svg" src="<?php echo get_template_directory_uri(); ?>/images/logo.svg" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>">
+        <img data-svg class="svg" src="<?php echo get_template_directory_uri(); ?>/images/logo.svg" alt="<?php echo esc_attr(get_bloginfo('name', 'display')); ?>">
     </header>

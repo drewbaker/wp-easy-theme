@@ -5,7 +5,7 @@
     Work template
     <?php var_dump(get_route_name()); ?>
 
-    <?php use_component('work-block', ['title' => 'test of title prop']); ?>
+    <?php use_component('work-block', ['title' => 'test of title argument']); ?>
 
     <?php use_component('work-block', ['title' => '2nd work block']); ?>
 

@@ -6,7 +6,7 @@ let count = 0;
 let total;
 
 // Search for unloaded SVG <img> tags and replace them
-function initSVGs(){
+export function initSVGs(){
 
     // Set total and counter
     let $svgs = $('img[data-svg=""]');
@@ -50,10 +50,11 @@ function replaceSVG( data ){
     $svg = $svg.removeAttr('xmlns:a');
 
     // Loop through IMG attributes and add them to SVG
-    $.each(attributes, function() {
+    $.each(attributes, function(){
         $svg.attr(this.name, this.value);
     });
 
+    $svg.removeAttr('src');
     $svg.attr('data-svg', 'replaced');
 
     // Replace image with new SVG
