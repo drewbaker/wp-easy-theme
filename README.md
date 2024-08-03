@@ -24,6 +24,7 @@
     - Example loop
     - Extend $post object to include post_thumbnail_id. See: https://wordpress.stackexchange.com/a/240051
 
+- Should we use this? https://swup.js.org/getting-started/example/
 
 ## DOCUMENTATION TODO
 - Router
