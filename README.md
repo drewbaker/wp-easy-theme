@@ -1,30 +1,25 @@
 ## TODO
-- [x] Favicon
+- Single file components (and templates). For example, make this work: https://github.com/drewbaker/wp-easy/blob/dev/templates/work-detail.php
+- Upgrade Router to use https://github.com/gpolguere/path-to-regexp-php
+    - Get it to work with `/` home directory...
+- JS combine & minify
+- CSS minify and inline
+- Make it a plugin not a theme
+
+## DREW'S TODO
 - Open Graph tags
-- [x] Components
-- [x] SASS
-- [x] Disable comments
-- [x] Font loading
-- Plugins
-    - [x] NestedPages
 - How to do better JS?
     - Intersection Obververs?
-    - Component JS files?
-- Template styles?
-- Move components to each to thier own directory...? With template, JS and CSS files?
-
-- Upgrade router
-    - Work with home route
-    - Maybe use /directors/:name/:spot style routing. See: https://github.com/gpolguere/path-to-regexp-php
-
+    - Component JS files/modules?
+- Move components so that each is in thier own directory? With template, JS and CSS files? Is this a good idea?
 
 - Default components to build
     - WpImage
     - WpMenu
+    - Extend $post object to include post_thumbnail_id. See: https://wordpress.stackexchange.com/a/240051    
     - Example loop
-    - Extend $post object to include post_thumbnail_id. See: https://wordpress.stackexchange.com/a/240051
 
-- Should we use this? https://swup.js.org/getting-started/example/
+- Should we use this for page animations? https://swup.js.org/getting-started/example/
 
 ## DOCUMENTATION TODO
 - Router
