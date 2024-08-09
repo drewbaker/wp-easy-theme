@@ -168,7 +168,7 @@ All attributes will be carred over also, note how `class="svg"` is added to the 
 Sometimes you might need to re-initlize SVGs, this can be done in JS like so:
 
 ```
-import {initSVGs} from "./svgs.js"
+import {initSVGs} from "wp-easy/svgs"
 initSVGs()
 ```
 
@@ -176,13 +176,16 @@ initSVGs()
 
 TODO Document how these work
 
-- JS and the state, and default event callbacks
+- Auto including of JS
+- JS and the state
 - jQuery
-- Modules
+- How to use the included modules
 
 ### SCSS
 
 TODO Document how fonts work
+
+- Font loaded events
 
 ## Notes
 
@@ -203,13 +206,11 @@ TODO Document anything else left over
 
 ## TODO - Drew's list
 - How to do better JS?
-    - How to get WordPress to generate an ES6 importmap for easier importing of JS
     - Intersection Obververs?
     - Infinate scroll/pagination...
     - Slideshows...
 - Move components so that each is in thier own directory? With template, JS and CSS files grouped? Is this a good idea?
 - Should we use this for page animations? https://swup.js.org/getting-started/example/
-- Set refferal URL into state
 
 # TODO Default components left to build
 - WpImage
