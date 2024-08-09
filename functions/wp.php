@@ -81,67 +81,42 @@ add_action('wp_head', 'wp_easy_head');
 
 
 /*
- * Adding generic open-graph meta tags to the head
- * Added here to keep the header.php clean
+ * Adding JS moudle importmaps to the head
  */
-function wp_easy_og_tags()
+function wp_easy_importmaps()
 {
-    global $post;
 
-    // Defaults to site generic info
-    $shared_image = get_template_directory_uri() . '/screenshot.png';
-    $summary = get_bloginfo('description');
-    $url = get_bloginfo('url');
-    $title = trim(wp_title('', false));
-    $type = 'website';
-    $site_name = get_bloginfo('name');
+    // TODO Load all templates and components as modules, like wp-easy/templates/header and wp-easy/components/button
 
-    switch (true) {
-        case is_home():
-        case is_front_page():
-            $title = get_bloginfo('name');
-            break;
+    $templates = get_template_directory() . '/templates/';
+    $template_files = glob($templates . "*.js");
+    $template_urls = [];
 
-        case empty($post):
-            break;
-
-        case !empty($post->video_url):
-            $type = 'video';
-
-        case is_singular('post'):
-            $type = 'article';
-
-        case is_single() or is_page():
-            $url = get_permalink($post->ID);
-
-            // Generate an excerpt
-            $summary = get_the_excerpt();
-            if (empty($summary)) {
-                $summary = wp_trim_excerpt(strip_shortcodes($post->post_content));
-            }
-
-            // Set image to post thumbnail
-            $image_id = get_post_thumbnail_id();
-            if (!empty($image_id)) {
-                $image_url = wp_get_attachment_image_src($image_id, 'social-preview');
-                $shared_image = $image_url[0];
-            }
-
-            break;
+    foreach ($template_files as $file) {
+        $template_urls['wp-easy/templates/' . basename($file, '.js')] = get_template_directory_uri() . '/templates/' . basename($file);
     }
 
-    // Remove any links, tags or line breaks from summary
-    $summary = $summary ?? get_bloginfo('description');
-    $summary = strip_tags($summary);
-    $summary = esc_attr($summary);
-    $summary = preg_replace('!\s+!', ' ', $summary);
+    $components = get_template_directory() . '/components/';
+    $component_files = glob($components . "*.js");
+    $component_urls = [];
+
+    foreach ($component_files as $file) {
+        $component_urls['wp-easy/components/' . basename($file, '.js')] = get_template_directory_uri() . '/components/' . basename($file);
+    }
+
+    $imports = [
+        'imports' => [
+            'wp-easy/main' => get_template_directory_uri() . '/js/main.js',
+            'wp-easy/browser' => get_template_directory_uri() . '/js/browser.js',
+            'wp-easy/svgs' => get_template_directory_uri() . '/js/svgs.js',
+            ...$template_urls,
+            ...$component_urls
+        ]
+    ];
 ?>
-    <meta property="og:title" content="<?php echo $title; ?>" />
-    <meta property="og:type" content="<?php echo $type; ?>" />
-    <meta property="og:url" content="<?php echo $url; ?>" />
-    <meta property="og:image" content="<?php echo $shared_image; ?>" />
-    <meta property="og:description" content="<?php echo $summary; ?>" />
-    <meta property="og:site_name" content="<?php echo $site_name; ?>" />
+    <script type="importmap">
+        <?php echo json_encode($imports); ?>
+    </script>
 <?php
 }
-add_action('wp_head', 'wp_easy_og_tags');
+add_action('wp_head', 'wp_easy_importmaps');

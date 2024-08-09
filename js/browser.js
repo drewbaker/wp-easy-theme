@@ -1,21 +1,19 @@
-import {state, onScroll as onScrollMain, onResize as onResizeMain} from "./main.js"
+import state from "wp-easy/main";
 
-function onResize(){
-    state.winHeight = jQuery(window).height();
-    state.winWidth = jQuery(window).width();
-    onResizeMain();
+const $ = jQuery
+
+function onResize(fn){
+    state.winWidth = $(window).width();
+    state.winHeight = $(window).height();
 }
 
-function onScroll(){
-    state.sTop = jQuery(window).scrollTop();
-    onScrollMain();
+function onScroll(fn){
+    state.sTop = $(window).scrollTop();
 }
 
-jQuery( document ).ready(($)=>{
-    $(window).resize(()=>{
-        window.requestAnimationFrame( onResize );
-    });
-    $(window).scroll(()=>{
-        window.requestAnimationFrame( onScroll );
-    })    
+$(window).resize(()=>{
+    onResize();
+});
+$(window).scroll(()=>{
+    onScroll();
 })

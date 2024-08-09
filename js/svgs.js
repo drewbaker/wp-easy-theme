@@ -66,6 +66,4 @@ function replaceSVG( data ){
     }
 }
 
-jQuery( document ).ready(()=>{
-    initSVGs()
-})
+initSVGs()

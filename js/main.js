@@ -1,30 +1,46 @@
 const $ = jQuery
 
-// State object defaults are updated automatically by the browser.js file
-export const state = {
+const state = {
     homeURL: serverVars.homeURL,
     themeURL: serverVars.themeURL,
-    winHeight : $(window).height(),
     winWidth : $(window).width(),
-    sTop: 0
+    winHeight : $(window).height(),
+    sTop: 0,
+    referrer: document.referrer
 }
 
 // Code that runs when the document is ready.
 function init() {
+    console.log('Main init', state)
 }
 
 // Called on resize
-export function onResize() {
+function onResize(){
+    console.log('Main onResize')
 }
 
 // Called on scroll
-export function onScroll() {    
+function onScroll(){    
+    console.log('Main onScroll')
 }
 
 // Called when all fonts have rendered
-export function onFontsRendered() {
+function onFontsLoaded() {
+    console.log('Main onFontsLoaded')
 }
 
-$( document ).ready(()=>{
-    init()
+// Start the app
+init()
+
+// Listen for events
+$(window).resize(()=>{
+    onResize();
+});
+$(window).scroll(()=>{
+    onScroll();
 })
+$(window).on('fonts-loaded', ()=>{
+    onFontsLoaded();
+})
+
+export default state

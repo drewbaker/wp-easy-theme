@@ -1,4 +1,3 @@
-import {onFontsRendered} from './main.js';
 /*
  * Font loader
  * SEE https://github.com/typekit/webfontloader
@@ -12,9 +11,9 @@ WebFont.load({
     //     families: ['Droid Sans', 'Droid Serif:bold']
     // },    
     active() {
-        onFontsRendered()
+        jQuery(window).trigger('fonts-loaded');
     },
     fontactive(familyName, fvd) {
-        //console.log('A single font rendered', familyName, fvd);
+        jQuery(window).trigger('font-loaded', {name: familyName, fvd: fvd});
     },   
 });

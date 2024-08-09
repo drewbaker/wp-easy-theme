@@ -10,6 +10,7 @@
  */
 require_once get_template_directory() . '/functions/utils.php';
 require_once get_template_directory() . '/functions/wp.php';
+require_once get_template_directory() . '/functions/og-tags.php';
 require_once get_template_directory() . '/functions/framework.php';
 require_once get_template_directory() . '/functions/images.php';
 require_once get_template_directory() . '/functions/plugin-manifest.php';
