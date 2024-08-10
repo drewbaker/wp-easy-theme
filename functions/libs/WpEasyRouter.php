@@ -45,7 +45,7 @@ function wp_easy_router($routes)
 
 // Add custom body classes to the front-end of our application so we can style accordingly.
 add_filter('body_class', function ($classes) {
-    $classes[] = 'template-' . get_route_name();
+    $classes[] = 'route-' . get_route_name();
     return $classes;
 });
 

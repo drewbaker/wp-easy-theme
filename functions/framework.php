@@ -62,3 +62,60 @@ function wp_easy_enqueue_scripts($filename, $directory = 'components')
         wp_enqueue_script_module($filename, $js_uri, [], null, true);
     }
 }
+
+/*
+ * Function that works like get_posts, but for children of the current post
+ * Also adds some default values to the post object
+ */
+function use_children($args = [])
+{
+    global $post;
+
+    $defaults = [
+        'post_type'         => 'any',
+        'post_parent'       => $post->ID,
+        'posts_per_page'    => -1,
+        'order'             => 'DESC',
+        'orderby'           => 'menu_order'
+    ];
+    $args = wp_parse_args($args, $defaults);
+
+    $posts = new WP_Query($args);
+
+    return $posts->posts ?? [];
+}
+
+/*
+ * Adds some useful default values to a post object
+ */
+function wp_easy_expand_post_object($post_object)
+{
+    if (!isset($post_object->id) and !is_admin()) {
+        $post_object->id = $post_object->ID;
+        $post_object->url = get_permalink($post_object->ID);
+        $post_object->thumbnail_id = get_post_thumbnail_id($post_object->ID);
+        $post_object->title = get_the_title($post_object->ID);
+    }
+    return $post_object;
+}
+
+/*
+ * Filter an array of posts to add some default values to each post object
+ */
+function wp_easy_filter_posts($posts)
+{
+    foreach ($posts as $post) {
+        $post = wp_easy_expand_post_object($post);
+    }
+    return $posts;
+}
+add_filter('the_posts', 'wp_easy_filter_posts');
+
+/*
+ * Filter a single post to add some default values to the post object
+ */
+function wp_easy_filter_post($post)
+{
+    $post = wp_easy_expand_post_object($post);
+}
+add_action('the_post', 'wp_easy_filter_post');

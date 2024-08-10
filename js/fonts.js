@@ -14,6 +14,8 @@ WebFont.load({
         jQuery(window).trigger('fonts-loaded');
     },
     fontactive(familyName, fvd) {
+        // fvd = font variation description
+        // SEE https://github.com/typekit/fvd
         jQuery(window).trigger('font-loaded', {name: familyName, fvd: fvd});
-    },   
+    }
 });
