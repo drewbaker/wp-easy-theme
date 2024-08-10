@@ -11,22 +11,22 @@ const state = {
 
 // Code that runs when the document is ready.
 function init() {
-    console.log('Main init', state)
 }
 
 // Called on resize
 function onResize(){
-    console.log('Main onResize')
+    state.winWidth = $(window).width();
+    state.winHeight = $(window).height();    
 }
 
 // Called on scroll
 function onScroll(){    
-    console.log('Main onScroll')
+    state.sTop = $(window).scrollTop();
 }
 
 // Called when all fonts have rendered
 function onFontsLoaded() {
-    console.log('Main onFontsLoaded')
+    
 }
 
 // Start the app
