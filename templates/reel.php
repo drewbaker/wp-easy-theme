@@ -1,6 +1,6 @@
 <?php use_component('header'); ?>
 
-<main class="reel">
+<main class="template-reel">
 
     Reel template example
 

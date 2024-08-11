@@ -213,6 +213,7 @@ TODO Document anything else left over
 - Should we use this for page animations? https://swup.js.org/getting-started/example/
 - Add Favicon to dashboard, see `wp_site_icon()` and `get_site_icon_url()`
 - Live reload when in dev mode? https://github.com/ryantate13/php-live-reload
+- Bring accross Focal Point picker and default ACF groups
 
 # TODO Default components left to build
 - WpImage

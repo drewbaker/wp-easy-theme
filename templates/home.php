@@ -1,6 +1,6 @@
 <?php use_component('header'); ?>
 
-<main class="home">
+<main class="template-home page">
 
     Home template example
 

@@ -1,6 +1,6 @@
 <?php use_component('header'); ?>
 
-<main class="fallback">
+<main class="template-fallback page">
 
     The router.php file had no matching route. This is the fallback template.
 
