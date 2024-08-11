@@ -8,8 +8,8 @@ function wp_easy_router($routes)
     $template_name = '';
 
     foreach ($routes as $name => $params) {
-
-        $re = PathToRegexp::convert($params['path'], $keys);
+        $path = $params['path'] ?? $params;
+        $re = PathToRegexp::convert($path, $keys);
         $matches = [];
         $match = preg_match($re, $_SERVER["REQUEST_URI"], $matches);
 
@@ -19,7 +19,7 @@ function wp_easy_router($routes)
         }
     }
 
-    $template = locate_template(array('templates/' . $template_name . '.php'));
+    $template = locate_template(['templates/' . $template_name . '.php']);
 
     if ($template_name and !$template) {
         $error = new WP_Error(

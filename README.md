@@ -35,12 +35,14 @@ wp_easy_router([
     'home'          => ['path' => '/'],                                     // Will display the /template/home.php file
     'work'          => ['path' => '/work/'],                                // Will display the /template/work.php file
     'work-detail'   => ['path' => '/work/:spot/', 'template' => 'work'],    // Will display the /template/work.php file also
-    'reel'          => ['path' => '/reel/'],                                // Will display the /template/reel.php file
+    'reel'          => '/reel/',                                            // Short syntax, will also display the /template/reel.php file
     'article'       => ['path' => '/:article'],                             // Will display the /template/article.php file
 ]);
 ```
 
-This syntax is similar to Node's Express path syntax. The key `home` is the route name, and the value is an array of `[path, template]`. The `path` is the URI you are trying to match to. The `template` is optional, and allows you to reuse the same template for multiple routes. If no template set, the key is used as the template name.
+This syntax is similar to Node's Express path syntax. The key `home` is the route name, and the value is an array of `[path, template]`. The `path` is the URI you are trying to match to. Note you can use a short string syntax instead of the array syntax of `name => '/path/'` for simple routes. 
+
+The `template` is optional, and allows you to reuse the same template for multiple routes. If no template set, the key is used as the template name.
 
 The router has a helper function `get_route_name()` that you can use to get the current active templates name.
 
