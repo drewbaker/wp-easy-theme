@@ -40,12 +40,12 @@ function wp_easy_og_tags()
             break;
     }
 ?>
-    <meta property="og:title" content="<?php echo $title; ?>" />
-    <meta property="og:type" content="<?php echo $type; ?>" />
-    <meta property="og:url" content="<?php echo $url; ?>" />
-    <meta property="og:image" content="<?php echo $shared_image; ?>" />
-    <meta property="og:description" content="<?php echo $summary; ?>" />
-    <meta property="og:site_name" content="<?php echo $site_name; ?>" />
+    <meta property="og:title" content="<?= $title; ?>" />
+    <meta property="og:type" content="<?= $type; ?>" />
+    <meta property="og:url" content="<?= $url; ?>" />
+    <meta property="og:image" content="<?= $shared_image; ?>" />
+    <meta property="og:description" content="<?= $summary; ?>" />
+    <meta property="og:site_name" content="<?= $site_name; ?>" />
 <?php
 }
 add_action('wp_head', 'wp_easy_og_tags');
@@ -61,8 +61,8 @@ function wp_easy_body_open()
     $title = wp_easy_get_title();
 ?>
     <div class="wp-seo">
-        <h1><?php echo $title; ?></h1>
-        <p><?php echo $summary; ?></p>
+        <h1><?= $title; ?></h1>
+        <p><?= $summary; ?></p>
     </div>
 <?php
 }

@@ -17,6 +17,7 @@ function wp_easy_init()
 }
 add_action('init', 'wp_easy_init');
 
+
 /*
  * Enqueue Custom Styles
  */
@@ -46,6 +47,22 @@ function wp_easy_scripts()
     ));
 }
 add_action("wp_enqueue_scripts", "wp_easy_scripts", 10);
+
+/*
+ * Just a hack to allow jQuery to work globally
+ * This way cause conflicts with other JS libraries that us $ as a global variable.
+ */
+function wp_easy_enable_jquery_dollar()
+{
+?>
+    <!-- A hacky way to allow jQuery to work globally. -->
+    <!-- This might cause conflicts with other JS libraries that us $ as a global variable. -->
+    <script type="text/javascript">
+        window.$ = jQuery;
+    </script>
+<?php
+}
+add_action('wp_head', 'wp_easy_enable_jquery_dollar');
 
 /*
  * Disable the default WordPress emoji scripts
@@ -81,48 +98,7 @@ function wp_easy_head()
 ?>
     <meta charset="<?php bloginfo('charset'); ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/images/favicon.png" />
+    <link rel="shortcut icon" href="<?= get_template_directory_uri(); ?>/images/favicon.png" />
 <?php
 }
 add_action('wp_head', 'wp_easy_head');
-
-
-/*
- * Adding JS moudle importmaps to the head
- */
-function wp_easy_importmaps()
-{
-
-    // TODO Load all templates and components as modules, like wp-easy/templates/header and wp-easy/components/button
-
-    $templates = get_template_directory() . '/templates/';
-    $template_files = glob($templates . "*.js");
-    $template_urls = [];
-
-    foreach ($template_files as $file) {
-        $template_urls['wp-easy/templates/' . basename($file, '.js')] = get_template_directory_uri() . '/templates/' . basename($file);
-    }
-
-    $components = get_template_directory() . '/components/';
-    $component_files = glob($components . "*.js");
-    $component_urls = [];
-
-    foreach ($component_files as $file) {
-        $component_urls['wp-easy/components/' . basename($file, '.js')] = get_template_directory_uri() . '/components/' . basename($file);
-    }
-
-    $imports = [
-        'imports' => [
-            'wp-easy/main' => get_template_directory_uri() . '/js/main.js',
-            'wp-easy/svgs' => get_template_directory_uri() . '/js/svgs.js',
-            ...$template_urls,
-            ...$component_urls
-        ]
-    ];
-?>
-    <script type="importmap">
-        <?php echo json_encode($imports); ?>
-    </script>
-<?php
-}
-add_action('wp_head', 'wp_easy_importmaps');

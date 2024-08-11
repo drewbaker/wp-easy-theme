@@ -93,7 +93,7 @@ $args = set_defaults($args, [
 
 <div class="work-block">
     <h2 class="title">
-        <?php echo $args['title']; ?>
+        <?= $args['title']; ?>
     </h2>
 </div>
 ```
@@ -153,7 +153,7 @@ TODO Document how SCSS work
 For example, this:
 
 ```
-<img data-svg class="svg" src="<?php echo get_template_directory_uri(); ?>/images/logo.svg">
+<img data-svg class="svg" src="<?= get_template_directory_uri(); ?>/images/logo.svg">
 ```
 
 Will be turned into this:

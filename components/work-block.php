@@ -7,6 +7,6 @@ $args = set_defaults($args, [
 
 <div class="work-block">
     <h2 class="title">
-        <?php echo $args['title']; ?>
+        <?= $args['title']; ?>
     </h2>
 </div>

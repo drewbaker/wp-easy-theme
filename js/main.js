@@ -1,5 +1,3 @@
-const $ = jQuery
-
 const state = {
     homeURL: serverVars.homeURL,
     themeURL: serverVars.themeURL,

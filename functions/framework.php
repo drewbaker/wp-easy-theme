@@ -15,11 +15,10 @@ function set_defaults($args, $defaults)
 }
 
 /*
- * Use a component, supporing args and loading styles and scripts
+ * Use a component, supporting args and loading styles and scripts
  */
 function use_component($name, $props = null)
 {
-
     wp_easy_enqueue_scripts($name, 'components');
 
     get_template_part(
@@ -43,46 +42,19 @@ add_action("wp_enqueue_scripts", "wp_easy_enqueue_template_scripts", 10);
  */
 function wp_easy_enqueue_scripts($filename, $directory = 'components')
 {
-    // Start with the css files if they exist
-    $scss_abs_path = get_template_directory() . '/' . $directory . '/' . $filename . '.scss';
-    $css_abs_path = get_template_directory() . '/' . $directory . '/' . $filename . '.css';
-    if (file_exists($scss_abs_path)) {
-        $scss_uri = get_template_directory_uri() . '/' . $directory . '/' . $filename . '.scss';
-        wp_enqueue_style($filename, $scss_uri, [], null, 'all');
+    // Try to enqueue all styles and scripts file for the component or template
+    $file_types = ['css', 'scss', 'js'];
+    foreach ($file_types as $file_type) {
+        $file_abs_path = get_template_directory() . '/' . $directory . '/' . $filename . '.' . $file_type;
+        if (file_exists($file_abs_path)) {
+            $file_uri = get_template_directory_uri() . '/' . $directory . '/' . $filename . '.' . $file_type;
+            if ($file_type == 'css' or $file_type == 'scss') {
+                wp_enqueue_style($filename, $file_uri, [], null, 'all');
+            } else {
+                wp_enqueue_script_module($filename, $file_uri, [], null, true);
+            }
+        }
     }
-    if (file_exists($css_abs_path)) {
-        $css_uri = get_template_directory_uri() . '/' . $directory . '/' . $filename . '.css';
-        wp_enqueue_style($filename, $css_uri, [], null, 'all');
-    }
-
-    // Now the js files if they exist
-    $js_abs_path = get_template_directory() . '/' . $directory . '/' . $filename . '.js';
-    if (file_exists($js_abs_path)) {
-        $js_uri = get_template_directory_uri() . '/' . $directory . '/' . $filename . '.js';
-        wp_enqueue_script_module($filename, $js_uri, [], null, true);
-    }
-}
-
-/*
- * Function that works like get_posts, but for children of the current post
- * Also adds some default values to the post object
- */
-function use_children($args = [])
-{
-    global $post;
-
-    $defaults = [
-        'post_type'         => 'any',
-        'post_parent'       => $post->ID,
-        'posts_per_page'    => -1,
-        'order'             => 'DESC',
-        'orderby'           => 'menu_order'
-    ];
-    $args = wp_parse_args($args, $defaults);
-
-    $posts = new WP_Query($args);
-
-    return $posts->posts ?? [];
 }
 
 /*
@@ -119,3 +91,38 @@ function wp_easy_filter_post($post)
     $post = wp_easy_expand_post_object($post);
 }
 add_action('the_post', 'wp_easy_filter_post');
+
+/*
+ * Adding JS moudle importmaps to the head, allows easier naming of JS imports
+ */
+function wp_easy_importmaps()
+{
+    // Directories to find JS files in, the setup ES6 import maps for
+    $directories = [
+        // namespace => path
+        ''              => '/js',
+        'utils/'        => '/js/utils',
+        'templates/'    => '/templates',
+        'components/'   => '/components',
+    ];
+
+    $urls = [];
+    foreach ($directories as $namespace => $path) {
+        $files = glob(get_template_directory() . $path . '/*.js');
+        foreach ($files as $file) {
+            $urls[$namespace . basename($file, '.js')] = get_template_directory_uri() . $path . '/' . basename($file);
+        }
+    }
+
+    $imports = [
+        'imports' => [
+            ...$urls,
+        ]
+    ];
+?>
+    <script type="importmap">
+        <?= json_encode($imports); ?>
+    </script>
+<?php
+}
+add_action('wp_head', 'wp_easy_importmaps');

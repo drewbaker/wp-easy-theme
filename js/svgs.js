@@ -1,5 +1,3 @@
-const $ = jQuery
-
 // init global cache object and assign local var
 let cache = {};
 let count = 0;
