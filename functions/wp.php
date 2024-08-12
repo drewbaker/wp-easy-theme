@@ -34,12 +34,14 @@ add_action("wp_enqueue_scripts", "wp_easy_styles", 10);
 function wp_easy_scripts()
 {
     wp_enqueue_script('jquery');
-    wp_enqueue_script_module('main', get_template_directory_uri() . '/js/main.js', ['jquery'], [], null, true);
-    wp_enqueue_script_module('svgs', get_template_directory_uri() . '/js/svgs.js', [], null, true);
-    wp_enqueue_script_module('fonts', get_template_directory_uri() . '/js/fonts.js', [], null, true);
 
     // Enqueue all JS files in /js/libs
     wp_easy_auto_enqueue_libs();
+
+    // Enqueue wp-easy scripts
+    wp_enqueue_script_module('main', get_template_directory_uri() . '/js/main.js', ['jquery'], [], null, true);
+    wp_enqueue_script_module('svgs', get_template_directory_uri() . '/js/svgs.js', [], null, true);
+    wp_enqueue_script_module('fonts', get_template_directory_uri() . '/js/fonts.js', [], null, true);
 
     // Setup JS variables in scripts
     wp_localize_script('jquery', 'serverVars', array(
@@ -61,7 +63,7 @@ function wp_easy_auto_enqueue_libs()
         $handle = basename($lib, '.js');
         $handle = str_replace(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'js', '..'], '', $handle);
         $handle = rtrim($handle, ".");
-        wp_enqueue_script($handle, get_template_directory_uri() . '/js/libs/' . basename($lib), [], null, true);
+        wp_enqueue_script($handle, get_template_directory_uri() . '/js/libs/' . basename($lib), [], null, []);
     }
 }
 
@@ -71,10 +73,10 @@ function wp_easy_auto_enqueue_libs()
  */
 function wp_easy_enable_jquery_dollar()
 {
-    // A hacky way to allow jQuery to work globally.
-    // This might cause conflicts with other JS libraries that us $ as a global variable.
 ?>
-    <script id="global-jquery-dollar" type="text/javascript">
+    <!-- A hacky way to allow jQuery to work globally. -->
+    <!-- This might cause conflicts with other JS libraries that us $ as a global variable. -->
+    <script type="text/javascript">
         window.$ = jQuery;
     </script>
 <?php
