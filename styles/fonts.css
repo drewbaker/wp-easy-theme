@@ -7,14 +7,13 @@
 
     Example:
 
-        @font-face {
-           font-family: 'My Font';
-           src: url('/fonts/MyFont.woff2') format('woff2'),
-                url('/fonts/MyFont.woff') format('woff');
-            font-style: normal;
-            font-weight: 400;
-            font-display: swap;
-        }
+    @font-face {
+        font-family: 'My Font';
+        src: url('../fonts/MyFont.woff2') format('woff2');
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+    }
 
     Font Weights:
         100 - Thin
