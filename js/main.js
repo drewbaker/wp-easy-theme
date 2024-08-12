@@ -22,10 +22,10 @@ function onScroll(){
 function onFontsLoaded() {}
 
 // Global in-view effects
-inView.offset(100);        
-inView('.in-view-enabled').on('enter', (el) => {
-    $(el).addClass('in-view-entered');
-});
+// inView.offset(100);        
+// inView('.in-view-enabled').on('enter', (el) => {
+//     $(el).addClass('in-view-entered');
+// });
 
 // Listen for events
 $(window).on('resize', onResize);
