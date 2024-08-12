@@ -17,7 +17,6 @@ function wp_easy_init()
 }
 add_action('init', 'wp_easy_init');
 
-
 /*
  * Enqueue Custom Styles
  */
@@ -72,10 +71,10 @@ function wp_easy_auto_enqueue_libs()
  */
 function wp_easy_enable_jquery_dollar()
 {
+    // A hacky way to allow jQuery to work globally.
+    // This might cause conflicts with other JS libraries that us $ as a global variable.
 ?>
-    <!-- A hacky way to allow jQuery to work globally. -->
-    <!-- This might cause conflicts with other JS libraries that us $ as a global variable. -->
-    <script type="text/javascript">
+    <script id="global-jquery-dollar" type="text/javascript">
         window.$ = jQuery;
     </script>
 <?php
@@ -116,10 +115,23 @@ function wp_easy_head()
 ?>
     <meta charset="<?php bloginfo('charset'); ?>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="<?= get_template_directory_uri(); ?>/images/favicon.png" />
+    <link rel="shortcut icon" href="<?= wp_easy_get_favicon_url(); ?>" />
 <?php
 }
 add_action('wp_head', 'wp_easy_head');
+
+/*
+ * Helper function to return the favicon URL
+ */
+function wp_easy_get_favicon_url()
+{
+    if (has_site_icon()) {
+        $favicon_url = get_site_icon_url();
+    } else {
+        $favicon_url = get_template_directory_uri() . '/images/favicon.png';
+    }
+    return $favicon_url;
+}
 
 /**
  * Allow SVG uploads.
@@ -145,3 +157,66 @@ function wp_easy_dequeue_jquery_migrate($scripts)
     }
 }
 add_action('wp_default_scripts', 'wp_easy_dequeue_jquery_migrate');
+
+/**
+ * Set the login page url it links too
+ */
+function custom_loginpage_logo_link($url)
+{
+    return get_bloginfo('url');
+}
+add_filter('login_headerurl', 'custom_loginpage_logo_link');
+
+/**
+ * Custom login header text for the logo to replace 'WordPress'
+ */
+function custom_loginpage_logo_title($message)
+{
+    return get_bloginfo('name');
+}
+add_filter('login_headertext', 'custom_loginpage_logo_title');
+
+/**
+ * Enqueue custom login CSS.
+ */
+function custom_loginpage_styles()
+{
+    wp_enqueue_style(
+        'wp-easy-login',
+        get_template_directory_uri() . '/styles/login.css',
+        null,
+        true
+    );
+}
+add_action('login_head', 'custom_loginpage_styles');
+
+/**
+ * Enqueue custom Admin CSS.
+ */
+function custom_admin_styles()
+{
+    wp_enqueue_style(
+        'wp-easy-admin',
+        get_template_directory_uri() . '/styles/admin.css',
+        null,
+        true
+    );
+    $custom_css = "
+        #wpadminbar {
+            --favicon-url: url('" . wp_easy_get_favicon_url() . "');
+        }
+    ";
+    wp_add_inline_style('wp-easy-admin', $custom_css);
+}
+add_action('admin_print_styles', 'custom_admin_styles');
+
+/**
+ * Add custom favicon to Admin and Login pages.
+ */
+function custom_site_favicon()
+{ ?>
+    <link rel="shortcut icon" href="<?= wp_easy_get_favicon_url(); ?>" />
+<?php
+}
+add_action('admin_head', 'custom_site_favicon');
+add_action('login_head', 'custom_site_favicon');

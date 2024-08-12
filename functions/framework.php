@@ -26,6 +26,8 @@ function use_component($name, $props = null)
         null,
         $props
     );
+
+    wp_reset_postdata();
 }
 
 /*

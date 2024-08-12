@@ -1,14 +1,10 @@
-const state = {
+export const state = {
     homeURL: serverVars.homeURL,
     themeURL: serverVars.themeURL,
     winWidth : $(window).width(),
     winHeight : $(window).height(),
     sTop: 0,
     referrer: document.referrer
-}
-
-// Code that runs when the document is ready.
-function init() {
 }
 
 // Called on resize
@@ -23,22 +19,17 @@ function onScroll(){
 }
 
 // Called when all fonts have rendered
-function onFontsLoaded() {
-    
-}
+function onFontsLoaded() {}
 
-// Start the app
-init()
+// Global in-view effects
+inView.offset(100);        
+inView('.in-view-enabled').on('enter', (el) => {
+    $(el).addClass('in-view-entered');
+});
 
 // Listen for events
-$(window).resize(()=>{
-    onResize();
-});
-$(window).scroll(()=>{
-    onScroll();
-})
-$(window).on('fonts-loaded', ()=>{
-    onFontsLoaded();
-})
+$(window).on('resize', onResize);
+$(window).on('scroll', onScroll);
+$(window).on('fonts-loaded', onFontsLoaded);
 
 export default state
