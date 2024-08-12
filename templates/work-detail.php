@@ -1,6 +1,6 @@
 <?php use_component('header'); ?>
 
-<main class="template-work-detail">
+<main class="template-work-detail main">
 
     <h2 class="title">Work detail example</h2>
 

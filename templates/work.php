@@ -1,6 +1,6 @@
 <?php use_component('header'); ?>
 
-<main class="template-work page">
+<main class="template-work main">
 
     Work template example
 

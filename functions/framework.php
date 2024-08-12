@@ -48,10 +48,11 @@ function wp_easy_enqueue_scripts($filename, $directory = 'components')
         $file_abs_path = get_template_directory() . '/' . $directory . '/' . $filename . '.' . $file_type;
         if (file_exists($file_abs_path)) {
             $file_uri = get_template_directory_uri() . '/' . $directory . '/' . $filename . '.' . $file_type;
+            $handle = $directory . '-' . $filename;
             if ($file_type == 'css' or $file_type == 'scss') {
-                wp_enqueue_style($filename, $file_uri, [], null, 'all');
+                wp_enqueue_style($handle, $file_uri, [], null, 'all');
             } else {
-                wp_enqueue_script_module($filename, $file_uri, [], null, true);
+                wp_enqueue_script_module($handle, $file_uri, [], null, true);
             }
         }
     }

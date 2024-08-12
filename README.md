@@ -11,6 +11,7 @@ Build a modern WordPress theme, but without any of the hassle of modern frontend
 - SCSS support
 - Font loading (local fonts, Adobe, Google and more)
 - Opinionated strucutre, so you stick to best practices 
+- Auto loading of 3rd party JS libraries
 
 ## Why
 
@@ -178,9 +179,9 @@ initSVGs()
 
 TODO Document how these work
 
-- Auto including of JS
+- Auto including of JS, anything in `/js/libs/` will be quto enqueded
 - JS and the state
-- jQuery
+- jQuery `$` works globally
 - How to use the included modules
 
 ### SCSS

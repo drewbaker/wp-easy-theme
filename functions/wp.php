@@ -34,11 +34,13 @@ add_action("wp_enqueue_scripts", "wp_easy_styles", 10);
  */
 function wp_easy_scripts()
 {
-    wp_enqueue_script('webfontloader', get_template_directory_uri() . '/js/libs/webfont.1.6.26.js', [], null, true);
     wp_enqueue_script('jquery');
     wp_enqueue_script_module('main', get_template_directory_uri() . '/js/main.js', ['jquery'], [], null, true);
     wp_enqueue_script_module('svgs', get_template_directory_uri() . '/js/svgs.js', [], null, true);
     wp_enqueue_script_module('fonts', get_template_directory_uri() . '/js/fonts.js', [], null, true);
+
+    // Enqueue all JS files in /js/libs
+    wp_easy_auto_enqueue_libs();
 
     // Setup JS variables in scripts
     wp_localize_script('jquery', 'serverVars', array(
@@ -47,6 +49,22 @@ function wp_easy_scripts()
     ));
 }
 add_action("wp_enqueue_scripts", "wp_easy_scripts", 10);
+
+/*
+ * Helper function to enqueue all JS files in /js/libs
+ */
+function wp_easy_auto_enqueue_libs()
+{
+    $libs_dir = get_template_directory() . '/js/libs/';
+    $libs = glob($libs_dir . '*.js');
+    foreach ($libs as $lib) {
+        // Remove file extension and version numbers for the handle name of the script
+        $handle = basename($lib, '.js');
+        $handle = str_replace(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'js', '..'], '', $handle);
+        $handle = rtrim($handle, ".");
+        wp_enqueue_script($handle, get_template_directory_uri() . '/js/libs/' . basename($lib), [], null, true);
+    }
+}
 
 /*
  * Just a hack to allow jQuery to work globally
@@ -102,3 +120,28 @@ function wp_easy_head()
 <?php
 }
 add_action('wp_head', 'wp_easy_head');
+
+/**
+ * Allow SVG uploads.
+ * Off be default, only enable on sites that need SVG uploaded.
+ */
+function add_mime_types($mimes)
+{
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter('upload_mimes', 'add_mime_types');
+
+/**
+ * Remove jQuery Migrate auto-loading by WordPress
+ */
+function wp_easy_dequeue_jquery_migrate($scripts)
+{
+    if (! is_admin() && ! empty($scripts->registered['jquery'])) {
+        $scripts->registered['jquery']->deps = array_diff(
+            $scripts->registered['jquery']->deps,
+            ['jquery-migrate']
+        );
+    }
+}
+add_action('wp_default_scripts', 'wp_easy_dequeue_jquery_migrate');
