@@ -41,7 +41,7 @@ function use_component($name, $props = null)
         preg_match_all('/<script\b[^>]*>(.*?)<\/script>/si', $content, $scripts);
     
         if ( ! empty( $styles[0] ) ) {
-            wp_easy_enqueue_component_styles( $styles[0] );
+            wp_easy_enqueue_component_styles( $styles[1] );
             $content = str_replace( $styles[0], '', $content );
         }
     
@@ -66,7 +66,18 @@ function wp_easy_enqueue_component_styles($styles)
     global $wp_easy_styles;
     $diff = array_diff( $styles, $wp_easy_styles );
     if ( ! empty( $diff ) ) {
-        echo join('', $diff);
+        $style_str = join(PHP_EOL, $diff);
+        if ( class_exists( 'ScssPhp\ScssPhp\Compiler' ) ) {
+            error_log('here');
+            try {
+                $compiler = new \ScssPhp\ScssPhp\Compiler();
+                $style_str = $compiler->compileString( $style_str )->getCss();
+            } catch (Exception $e) {
+                //
+            }
+        }
+
+        printf( '<style>%s</style>', $style_str );
     }
 
     $wp_easy_styles = array_unique( array_merge( $wp_easy_styles, $styles ) );
