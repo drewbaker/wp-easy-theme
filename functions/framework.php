@@ -4,7 +4,10 @@
  * This file contains all the functions to power the WP-Easy framework, such as component rendering, default values, and helper functions.
  *
  */
+global $wp_easy_styles;
+global $wp_easy_scripts;
 
+$wp_easy_styles = $wp_easy_scripts = array();
 
 /*
  * Helper function to set default values component args
@@ -21,14 +24,76 @@ function use_component($name, $props = null)
 {
     wp_easy_enqueue_scripts($name, 'components');
 
+    ob_start();
     get_template_part(
         'components/' . $name,
         null,
         $props
     );
+    $content = ob_get_clean();
+
+    $wp_components = array( 'header', 'footer' );
+    if ( ! in_array( $name, $wp_components ) ) {
+        // Match styles
+        preg_match_all('/<style\b[^>]*>(.*?)<\/style>/si', $content, $styles);
+    
+        // Match scripts
+        preg_match_all('/<script\b[^>]*>(.*?)<\/script>/si', $content, $scripts);
+    
+        if ( ! empty( $styles[0] ) ) {
+            wp_easy_enqueue_component_styles( $styles[0] );
+            $content = str_replace( $styles[0], '', $content );
+        }
+    
+        if ( ! empty( $scripts[0] ) ) {
+            wp_easy_enqueue_component_scripts( $scripts[1] );
+            $content = str_replace( $scripts[0], '', $content );
+        }
+    }
+
+    echo $content;
 
     wp_reset_postdata();
 }
+
+/**
+ * Enqueue component inline styles.
+ *
+ * @param array $styles Style array to register.
+ */
+function wp_easy_enqueue_component_styles($styles)
+{
+    global $wp_easy_styles;
+    $diff = array_diff( $styles, $wp_easy_styles );
+    if ( ! empty( $diff ) ) {
+        echo join('', $diff);
+    }
+
+    $wp_easy_styles = array_unique( array_merge( $wp_easy_styles, $styles ) );
+}
+
+/**
+ * Register inline scripts.
+ *
+ * @param array $scripts Style array to register.
+ */
+function wp_easy_enqueue_component_scripts($scripts)
+{
+    global $wp_easy_scripts;
+    $wp_easy_scripts = array_unique( array_merge( $wp_easy_scripts, $scripts ) );
+}
+
+/**
+ * Print component inline script
+ */
+function wp_easy_print_component_scripts()
+{
+    global $wp_easy_scripts;
+    ?>
+    <script type="text/javascript"><?php echo join( PHP_EOL, $wp_easy_scripts ) ?></script>
+    <?php
+}
+add_action( 'wp_footer', 'wp_easy_print_component_scripts' );
 
 /*
  * Load the current routes styles and scripts
