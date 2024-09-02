@@ -17,6 +17,13 @@ function set_defaults($args, $defaults)
     return wp_parse_args($args, $defaults);
 }
 
+function use_outlet() {
+    $template_file = get_query_var( 'template_file' );
+    if ( ! empty( $template_file ) ) {
+        include $template_file;
+    }
+}
+
 /*
  * Use a component, supporting args and loading styles and scripts
  */

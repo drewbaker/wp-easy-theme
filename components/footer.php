@@ -1,6 +1,3 @@
-Footer here
-
-<?php wp_footer(); ?>
-</body>
-
-</html>
+<footer class="footer">
+    Footer here
+</footer>

@@ -8,15 +8,9 @@
 <body>
     <?php wp_body_open(); ?>
 
-    <?php use_component('header'); ?>
+    <h1>Layout1</h1>
+    <?php use_outlet(); ?>
 
-    <main class="template-fallback page">
-
-        The router.php file had no matching route. This is the fallback template.
-
-    </main>
-
-    <?php use_component('footer'); ?>
     <?php wp_footer(); ?>
 </body>
 

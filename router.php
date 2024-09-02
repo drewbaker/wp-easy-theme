@@ -14,6 +14,6 @@
 wp_easy_router([
     'home'              => '/',
     'work'              => '/work/',
-    'work-detail'       => ['path' => '/work/:spot/', 'template' => 'work'],
+    'work-detail'       => ['path' => '/work/:spot/', 'template' => 'work', 'layout' => 'layout1'],
     'reel'              => '/reel/',
 ]);
