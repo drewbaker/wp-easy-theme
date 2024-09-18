@@ -162,7 +162,7 @@ class Override {
 	public function custom_loginpage_styles() {
 		wp_enqueue_style(
 			'wp-easy-login',
-			Utils::get_template_directory( 'styles/login.css' ),
+			Utils::get_template_url( 'styles/login.css' ),
 			null,
 			true
 		);
@@ -174,7 +174,7 @@ class Override {
 	public function custom_admin_styles() {
 		wp_enqueue_style(
 			'wp-easy-admin',
-			Utils::get_template_directory( 'styles/admin.css' ),
+			Utils::get_template_url( 'styles/admin.css' ),
 			null,
 			true
 		);
@@ -221,7 +221,7 @@ class Override {
 		global $post;
 
 		// Defaults to site generic info
-		$shared_image = Utils::get_template_directory( 'screenshot.png' );
+		$shared_image = Utils::get_template_url( 'screenshot.png' );
 		$summary      = $this->get_summary();
 		$url          = get_bloginfo( 'url' );
 		$title        = $this->get_title();
