@@ -10,3 +10,34 @@ $args = set_defaults($args, [
         <?= $args['title']; ?>
     </h2>
 </div>
+
+<style>
+    @import '../styles/media-queries';
+
+    .work-block {
+        background-color: red;
+
+        .title {
+            color: var(--color-black);
+        }
+
+        // Media queries can be used like this
+        @media #{$lt-phone} {
+            background-color: yellow;
+
+            .title {
+                color: var(--color-black);
+            }
+        }
+    }
+</style>
+
+<script>
+    // import {state} from "wp-easy/main";
+
+    function init() {
+        // Component is ready.
+    }
+
+    init()
+</script>

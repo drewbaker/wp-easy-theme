@@ -1,5 +1,3 @@
-<?php use_component('header'); ?>
-
 <main class="template-home main">
 
     Home template example
@@ -13,4 +11,8 @@
 
 </main>
 
-<?php use_component('footer'); ?>
+<style>
+    .template-home {
+        background-color: red;
+    }
+</style>
