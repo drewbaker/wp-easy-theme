@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> prefix="og: http://ogp.me/ns#" <?php body_class(); ?>>
+<html <?php language_attributes(); ?> prefix="og: http://ogp.me/ns#" <?php body_class('layout-default'); ?>>
 
 <head>
-    <?php wp_head(); ?>
+    <?php
+    // This is required by WordPress
+    wp_head();
+    ?>
 </head>
 
 <body>
-    <?php wp_body_open(); ?>
+    <?php
+    // This is required by WordPress
+    wp_body_open();
+    ?>
 
     <?php use_component('header'); ?>
-
-    <h1>Default Layout</h1>
 
     <?php use_outlet(); ?>
 
     <?php use_component('footer'); ?>
 
-    <?php wp_footer(); ?>
+    <?php
+    // This is required by WordPress
+    wp_footer();
+    ?>
 </body>
 
 </html>

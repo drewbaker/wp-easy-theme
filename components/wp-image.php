@@ -72,3 +72,42 @@ $classes = ['wp-image', $args['class'], 'mode-' . $args['mode']];
         <video class="media media-video" playsinline autoplay muted loading="lazy" src="<?= $video_url; ?>" loop></video>
     <?php endif; ?>
 </figure>
+
+<style>
+    .wp-image {
+        width: 100%;
+        margin: 0;
+        aspect-ratio: var(--aspect-ratio);
+
+        .media {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .media-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        // Modes
+        :where(&.mode-cover) {
+            position: relative;
+        }
+
+        &.mode-cover {
+            .media {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+</style>
