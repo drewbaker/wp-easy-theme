@@ -11,9 +11,11 @@
  * SEE https://github.com/drewbaker/wp-easy/blob/main/README.md
  */
 
-wp_easy_router([
+$routes = [
     'home'              => '/',
     'work'              => '/work/',
     'work-detail'       => ['path' => '/work/:spot/', 'template' => 'work'],
     'reel'              => '/reel/',
-]);
+];
+
+return $routes;
