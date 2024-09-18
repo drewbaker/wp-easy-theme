@@ -10,3 +10,25 @@ $args = set_defaults($args, [
         <?= $args['title']; ?>
     </h2>
 </div>
+
+<style>
+    body {
+        .work-block {
+            border: 1px solid #000;
+        }
+    }
+</style>
+<style>
+.work-block {
+    h2 {
+        &.title {
+            font-weight: 700;
+            color: red;
+        }
+    }
+}
+</style>
+<script>
+console.log(1);
+</script>
+<script>console.log(2);</script>
