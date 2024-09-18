@@ -12,7 +12,14 @@
 </main>
 
 <style>
+    @import '../styles/media-queries';
+
     .template-home {
         background-color: red;
+
+        // Media queries can be used like this
+        @media #{$lt-phone} {
+            background-color: blue;
+        }
     }
 </style>

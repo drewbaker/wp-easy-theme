@@ -14,7 +14,8 @@
 $routes = [
     'home'              => '/',
     'work'              => '/work/',
-    'work-detail'       => ['path' => '/work/:spot/', 'template' => 'work'],
+    // Would use the /layouts/alternate.php layout, with the /templates/work.php page template
+    'work-detail'       => ['path' => '/work/:spot/', 'layout' => 'alternate', 'template' => 'work'],
     'reel'              => '/reel/',
 ];
 

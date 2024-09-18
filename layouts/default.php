@@ -16,7 +16,10 @@
 
     <?php use_component('header'); ?>
 
-    <?php use_outlet(); ?>
+    <?php
+    // This is where the page template will be rendered
+    use_outlet();
+    ?>
 
     <?php use_component('footer'); ?>
 
