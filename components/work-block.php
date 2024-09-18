@@ -38,9 +38,10 @@ $args = set_defaults(
 <script>
 	// import {state} from "wp-easy/main";
 
-	function init() {
+	function workInit() {
+		console.log('here');
 		// Component is ready.
 	}
 
-	init()
+	workInit()
 </script>
