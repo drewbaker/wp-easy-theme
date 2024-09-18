@@ -1,5 +1,3 @@
-<?php use_component('header'); ?>
-
 <main class="template-work main">
 
     Work template example
@@ -16,4 +14,12 @@
 
 </main>
 
-<?php use_component('footer'); ?>
+<script>
+    // import {state} from "main"
+
+    function init() {
+        // Work template loaded. You can even access the state object here because of the `import` statment above.
+    }
+
+    init()
+</script>

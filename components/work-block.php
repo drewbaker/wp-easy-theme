@@ -12,23 +12,32 @@ $args = set_defaults($args, [
 </div>
 
 <style>
-    body {
-        .work-block {
-            border: 1px solid #000;
+    @import '../styles/media-queries';
+
+    .work-block {
+        background-color: red;
+
+        .title {
+            color: var(--color-black);
+        }
+
+        // Media queries can be used like this
+        @media #{$lt-phone} {
+            background-color: yellow;
+
+            .title {
+                color: var(--color-black);
+            }
         }
     }
 </style>
-<style>
-.work-block {
-    h2 {
-        &.title {
-            font-weight: 700;
-            color: red;
-        }
-    }
-}
-</style>
+
 <script>
-console.log(1);
+    // import {state} from "wp-easy/main";
+
+    function init() {
+        // Component is ready.
+    }
+
+    init()
 </script>
-<script>console.log(2);</script>
