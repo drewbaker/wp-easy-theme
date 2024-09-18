@@ -1,43 +1,46 @@
 <?php
 // Set default args for the component
-$args = set_defaults($args, [
-    'title' => 'Title default here',
-]);
+$args = set_defaults(
+	$args,
+	[
+		'title' => 'Title default here',
+	]
+);
 ?>
-
-<div class="work-block">
-    <h2 class="title">
-        <?= $args['title']; ?>
-    </h2>
-</div>
-
+<template>
+	<div class="work-block">
+		<h2 class="title">
+			<?php echo $args['title']; ?>
+		</h2>
+	</div>
+</template>
 <style>
-    @import 'media-queries';
+	@import 'media-queries';
 
-    .work-block {
-        background-color: red;
+	.work-block {
+		background-color: red;
 
-        .title {
-            color: var(--color-black);
-        }
+		.title {
+			color: var(--color-black);
+		}
 
-        // Media queries can be used like this
-        @media #{$lt-phone} {
-            background-color: yellow;
+		// Media queries can be used like this
+		@media #{$lt-phone} {
+			background-color: yellow;
 
-            .title {
-                color: var(--color-black);
-            }
-        }
-    }
+			.title {
+				color: var(--color-black);
+			}
+		}
+	}
 </style>
 
 <script>
-    // import {state} from "wp-easy/main";
+	// import {state} from "wp-easy/main";
 
-    function init() {
-        // Component is ready.
-    }
+	function init() {
+		// Component is ready.
+	}
 
-    init()
+	init()
 </script>

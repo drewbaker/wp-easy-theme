@@ -6,130 +6,130 @@
  * Globals
  */
 :root {
-    /* Body */
-    --body-bg-color: #fff;
+	/* Body */
+	--body-bg-color: #fff;
 
-    --text-color: #000;
-    --text-color-hover: #000;
+	--text-color: #000;
+	--text-color-hover: #000;
 
-    /* Form */
-    --form-bg-color: #fff;
-    --form-border-color: #fff;
+	/* Form */
+	--form-bg-color: #fff;
+	--form-border-color: #fff;
 
-    /* Input fields */
-    --input-bg-color: #fff;
-    --input-text-color: #000;
-    --input-border-color: #000;
+	/* Input fields */
+	--input-bg-color: #fff;
+	--input-text-color: #000;
+	--input-border-color: #000;
 
-    /* Submit button */
-    --button-bg-color: #ffffff;
-    --button-bg-color-hover: #000;
+	/* Submit button */
+	--button-bg-color: #ffffff;
+	--button-bg-color-hover: #000;
 
-    --button-text-color: #000;
-    --button-text-color-hover: #ffffff;    
+	--button-text-color: #000;
+	--button-text-color-hover: #ffffff;
 
-    --button-border-color: #000;
-    --button-border-color-hover: #000;
+	--button-border-color: #000;
+	--button-border-color-hover: #000;
 }
 html {
-    background: var(--body-bg-color);
+	background: var(--body-bg-color);
 }
 body.login {
-    font-size: 14px;
-    background: var(--body-bg-color);
-    line-height: 1.4;
-    padding: 0;
-    margin: 0;
-    border: none;
-    width: 100%;
+	font-size: 14px;
+	background: var(--body-bg-color);
+	line-height: 1.4;
+	padding: 0;
+	margin: 0;
+	border: none;
+	width: 100%;
 }
 a {
-    outline: none;
+	outline: none;
 }
 
 /*
  * Login Banner Image
  */
 #login h1 a {
-    background-image: url(../images/logo.svg);
-    background-position: center center;
-    margin: 0;
-    background-size: auto;
-    width: auto;
+	background-image: url(../images/logo.svg);
+	background-position: center center;
+	margin: 0;
+	background-size: auto;
+	width: auto;
 }
 
 /*
  * Login Form
  */
 #loginform {
-    box-shadow: none;
-    background: var(--form-bg-color);
-    border-color: var(--form-border-color);
+	box-shadow: none;
+	background: var(--form-bg-color);
+	border-color: var(--form-border-color);
 }
 #loginform label {
-    color: var(--text-color);
+	color: var(--text-color);
 }
 #loginform input[type='text'],
 #loginform input[type='password'] {
-    background: var(--input-bg-color);
-    border: 1px solid var(--input-border-color);
-    font-family: inherit;
-    padding: 5px 8px;
-    box-sizing: border-box;
-    color: var(--input-text-color);
+	background: var(--input-bg-color);
+	border: 1px solid var(--input-border-color);
+	font-family: inherit;
+	padding: 5px 8px;
+	box-sizing: border-box;
+	color: var(--input-text-color);
 }
 #loginform input[type='checkbox'],
 #loginform input[type='radio'] {
-    vertical-align: baseline;
+	vertical-align: baseline;
 }
 
 /*
  * Login Submit Button
  */
 #wp-submit {
-    background: var(--button-bg-color);
-    color: var(--button-text-color);
-    border: none;
-    text-shadow: none;
-    box-shadow: none;
-    text-transform: uppercase;
-    border: 2px solid var(--button-border-color);
-    height: initial;
-    padding-top: 2px;
-    transition: all 0.4s;
+	background: var(--button-bg-color);
+	color: var(--button-text-color);
+	border: none;
+	text-shadow: none;
+	box-shadow: none;
+	text-transform: uppercase;
+	border: 2px solid var(--button-border-color);
+	height: initial;
+	padding-top: 2px;
+	transition: all 0.4s;
 }
 #wp-submit:hover,
 #wp-submit:focus {
-    background: var(--button-bg-color-hover);
-    color: var(--button-text-color-hover);
-    border: 2px solid var(--button-border-color-hover);
+	background: var(--button-bg-color-hover);
+	color: var(--button-text-color-hover);
+	border: 2px solid var(--button-border-color-hover);
 }
 
 /*
  * "Lost password" link
  */
 #nav {
-    text-shadow: none;
+	text-shadow: none;
 }
 .login #nav a {
-    text-decoration: none;
-    padding: 0 1px;
-    text-shadow: none;
-    color: var(--text-color);
-    text-decoration: underline;
+	text-decoration: none;
+	padding: 0 1px;
+	text-shadow: none;
+	color: var(--text-color);
+	text-decoration: underline;
 }
 .login #nav a:hover,
 .login #nav a:focus {
-    color: var(--text-color-hover) !important;
-    font-weight: normal;
-    text-shadow: none;
+	color: var(--text-color-hover) !important;
+	font-weight: normal;
+	text-shadow: none;
 }
 
 /*
  * "Back to blog" link header
  */
 #backtoblog {
-    display: none;
+	display: none;
 }
 
 /*
@@ -137,13 +137,13 @@ a {
  */
 .login .message,
 .login #login_error {
-    background-color: var(--body-bg-color);
-    color: var(--text-color);
+	background-color: var(--body-bg-color);
+	color: var(--text-color);
 }
 .login #login_error a {
-    color: var(--text-color);
+	color: var(--text-color);
 }
 .login #login_error a:hover,
 .login #login_error a:focus {
-    color: var(--text-color-hover);
+	color: var(--text-color-hover);
 }

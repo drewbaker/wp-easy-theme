@@ -6,12 +6,12 @@
  * Logo Icon
  */
 #wpwrap #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
-    background-image: var(--favicon-url);
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 26px auto;
-    background-color: #ffffff;
+	background-image: var(--favicon-url);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 26px auto;
+	background-color: #ffffff;
 }
 #wpwrap #wpadminbar #wp-admin-bar-wp-logo > .ab-item span {
-    visibility: hidden;
+	visibility: hidden;
 }

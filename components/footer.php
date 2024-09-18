@@ -1,3 +1,5 @@
-<footer class="footer">
-    Footer here
-</footer>
+<template>
+    <footer class="footer">
+        Footer here
+    </footer>
+</template>
