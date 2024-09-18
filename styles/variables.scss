@@ -2,7 +2,7 @@
  * Custom defined CSS vars
  */
 
-@import 'media-queries';
+@import './base/media-queries';
 
 :root {
     --color-white: #ffffff;
@@ -18,9 +18,9 @@
     --easing-authentic-motion: cubic-bezier(0.4, 0, 0.2, 1);
 
     // Breakpoints
-    // @media #{$lt-phone} {
-    //     --unit-gap: 20px;
-    // }
+    @media #{$lt-phone} {
+        --unit-gap: 20px;
+    }
 
     // Handle 100vh on mobile using Dynamic View Height units
     @supports (height: 100dvh) {
