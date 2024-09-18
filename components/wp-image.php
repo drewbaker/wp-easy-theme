@@ -47,7 +47,7 @@ $image = wp_get_attachment_image(
 
 // Set the image aspect ratio as CSS vars
 $img_meta = wp_get_attachment_metadata($args['image_id']);
-if ($img_meta) {
+if ($img_meta && $img_meta['width'] && $img_meta['height']) {
     $ratio = $img_meta['width'] . ' / ' . $img_meta['height'];
 }
 
