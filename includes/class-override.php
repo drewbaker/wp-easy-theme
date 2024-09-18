@@ -221,7 +221,7 @@ class Override {
 		global $post;
 
 		// Defaults to site generic info
-		$shared_image = Utils::get_template_directory() . 'screenshot.png';
+		$shared_image = Utils::get_template_directory( 'screenshot.png' );
 		$summary      = $this->get_summary();
 		$url          = get_bloginfo( 'url' );
 		$title        = $this->get_title();
@@ -262,10 +262,10 @@ class Override {
 		<?php
 	}
 
-	/*
-	* Adding some generic site data to start of page for SEO
-	* Added here to keep the header.php clean
-	*/
+	/**
+	 * Adding some generic site data to start of page for SEO
+	 * Added here to keep the header.php clean
+	 */
 	public function body_open() {
 		?>
 		<div class="wp-seo">
@@ -275,9 +275,11 @@ class Override {
 		<?php
 	}
 
-	/*
-	* Helper function to get a summary for the current page
-	*/
+	/**
+	 * Helper function to get a summary for the current page
+	 *
+	 * @return string
+	 */
 	private function get_summary() {
 		global $post;
 
@@ -297,9 +299,11 @@ class Override {
 		return $summary;
 	}
 
-	/*
-	* Helper function to get a title for the current page
-	*/
+	/**
+	 * Helper function to get a title for the current page
+	 *
+	 * @return string
+	 */
 	private function get_title() {
 		global $post;
 
@@ -320,7 +324,7 @@ class Override {
 
 		// Change these values to install new versions of plugins
 		$config = array(
-			'id'           => 'wp-easy',                  // Unique ID for hashing notices for multiple instances of TGMPA.
+			'id'           => 'wp-easy',               // Unique ID for hashing notices for multiple instances of TGMPA.
 			'default_path' => '',                      // Default absolute path to bundled plugins.
 			'menu'         => 'tgmpa-install-plugins', // Menu slug.
 			'parent_slug'  => 'themes.php',            // Parent menu slug.
