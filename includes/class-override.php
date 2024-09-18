@@ -338,6 +338,13 @@ class Override {
 
 		$plugins = array(
 			array(
+				'name'         => 'WP Easy Plugin',
+				'slug'         => 'wp-easy',
+				'version'      => '0.1.0',
+				'required'     => true,
+				'external_url' => 'https://github.com/drewbaker/wp-easy/',
+			),
+			array(
 				'name'     => 'SCSS-Library',
 				'slug'     => 'scss-library',
 				'version'  => '0.4.1',
