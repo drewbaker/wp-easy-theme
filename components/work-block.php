@@ -5,11 +5,13 @@ $args = set_defaults($args, [
 ]);
 ?>
 
-<div class="work-block">
-    <h2 class="title">
-        <?= $args['title']; ?>
-    </h2>
-</div>
+<template>
+    <div class="work-block">
+        <h2 class="title">
+            <?= $args['title']; ?>
+        </h2>
+    </div>
+</template>
 
 <style>
     @import 'media-queries';

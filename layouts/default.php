@@ -30,3 +30,10 @@
 </body>
 
 </html>
+
+<?php
+/*
+ * Note, layouts are not Single File Components. 
+ * So put your styles in main.scss and scripts in main.js.
+ */
+?>

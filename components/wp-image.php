@@ -61,17 +61,19 @@ $classes = ['wp-image', $args['class'], 'mode-' . $args['mode']];
 
 <?php if (!$image) return; ?>
 
-<figure
-    id="<?= $args['id']; ?>"
-    class="<?= implode(' ', $classes); ?>"
-    style="--aspect-ratio: <?= $ratio; ?>">
+<template>
+    <figure
+        id="<?= $args['id']; ?>"
+        class="<?= implode(' ', $classes); ?>"
+        style="--aspect-ratio: <?= $ratio; ?>">
 
-    <?= $image; ?>
+        <?= $image; ?>
 
-    <?php if ($video_url) : ?>
-        <video class="media media-video" playsinline autoplay muted loading="lazy" src="<?= $video_url; ?>" loop></video>
-    <?php endif; ?>
-</figure>
+        <?php if ($video_url) : ?>
+            <video class="media media-video" playsinline autoplay muted loading="lazy" src="<?= $video_url; ?>" loop></video>
+        <?php endif; ?>
+    </figure>
+</template>
 
 <style>
     .wp-image {

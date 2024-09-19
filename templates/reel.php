@@ -1,8 +1,10 @@
-<main class="template-reel main">
+<template>
+    <main class="template-reel main">
 
-    Reel template example
+        Reel template example
 
-</main>
+    </main>
+</template>
 
 <style>
     main.reel {
