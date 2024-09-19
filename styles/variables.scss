@@ -2,7 +2,7 @@
  * Custom defined CSS vars
  */
 
-@import 'media-queries';
+@import './base/media-queries'; 
 
 :root {
     --color-white: #ffffff;

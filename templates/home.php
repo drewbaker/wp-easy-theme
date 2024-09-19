@@ -12,7 +12,7 @@
 </main>
 
 <style>
-    @import '../styles/media-queries';
+    @import 'media-queries';
 
     .template-home {
         background-color: red;

@@ -12,7 +12,7 @@ $args = set_defaults($args, [
 </div>
 
 <style>
-    @import '../styles/media-queries';
+    @import 'media-queries';
 
     .work-block {
         background-color: red;
