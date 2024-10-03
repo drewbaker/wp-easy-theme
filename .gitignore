@@ -2,6 +2,7 @@
 logs
 *.log
 phpcs.xml
-
+general-compiled.css
+general-compiled.css.map
 # file system junk
 .DS_Store
