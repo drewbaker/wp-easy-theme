@@ -26,12 +26,6 @@ function fuxt_register_required_plugins() {
 	);
 
 	$plugins = array(
-		array(
-			'name'    => 'SCSS-Library',
-			'slug'    => 'scss-library',
-			'version' => '0.4.1',
-			'required'     => true,
-		),
 		// array(
 		// 	'name'         => 'Advanced Custom Fields Pro',
 		// 	'slug'         => 'advanced-custom-fields-pro',
