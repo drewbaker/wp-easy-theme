@@ -102,6 +102,9 @@ $classes = ['wp-image', $args['class'], 'mode-' . $args['mode']];
         }
 
         &.mode-cover {
+            height: 100%;
+            aspect-ratio: unset;
+            
             .media {
                 position: absolute;
                 top: 0;
