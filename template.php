@@ -3,6 +3,10 @@
 
 <head>
     <?php
+    ob_start();
+    use_layout( get_query_var( 'layout', 'default' ) );
+    $layout = ob_get_clean();
+
     // This is required by WordPress
     wp_head();
     ?>
@@ -13,8 +17,7 @@
     // This is required by WordPress
     wp_body_open();
 
-	$layout = get_query_var( 'layout', 'default' );
-	use_layout( $layout );
+    echo $layout;
 
     // This is required by WordPress
     wp_footer();
