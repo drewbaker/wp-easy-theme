@@ -4,7 +4,7 @@
 <head>
     <?php
     ob_start();
-    use_layout( get_query_var( 'layout', 'default' ) );
+    use_layout();
     $layout = ob_get_clean();
 
     // This is required by WordPress
