@@ -9,7 +9,7 @@
 ?>
 </template>
 <style>
-    header {
-        font-size: 4rem !important;
+    .header {
+        /* styles go here */
     }
 </style>
