@@ -5,12 +5,10 @@
 </template>
 
 <style>
-    @import 'media-queries';
-
     .header {
         background-color: green;
 
-        // Media queries can be used like this
+        /* Media queries can be used like this */
         @media #{$lt-phone} {
             background-color: yellow;
         }

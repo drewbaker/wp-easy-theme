@@ -14,8 +14,6 @@ $args = set_defaults($args, [
 </template>
 
 <style>
-    @import 'media-queries';
-
     .work-block {
         background-color: red;
 
@@ -23,7 +21,7 @@ $args = set_defaults($args, [
             color: var(--color-black);
         }
 
-        // Media queries can be used like this
+        /* Media queries can be used like this */
         @media #{$lt-phone} {
             background-color: yellow;
 
