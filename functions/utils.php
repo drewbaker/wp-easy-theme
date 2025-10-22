@@ -53,3 +53,29 @@ function split_text($text = '', $pieces = null, $separator = [" &#8211; ", " - "
 
     return $output;
 }
+
+/**
+ * Convert a string to kebab-case.
+ * 
+ * @param string $string
+ * @return string
+ */
+function to_kebab_case(string $string): string
+{
+    // Replace non-alphanumeric characters (except hyphens and underscores) with spaces,
+    // then replace multiple spaces with single spaces.
+    $string = preg_replace('/[^a-zA-Z0-9\s_-]/', '', $string);
+    $string = preg_replace('/\s+/', ' ', $string);
+
+    // Replace spaces and underscores with hyphens.
+    $string = str_replace([' ', '_'], '-', $string);
+
+    // Convert camelCase to kebab-case (e.g., "camelCase" to "camel-case").
+    $string = preg_replace('/(?<=[a-z])(?=[A-Z])/', '-', $string);
+
+    // Convert to lowercase.
+    $string = strtolower($string);
+
+    return $string;
+}
+
