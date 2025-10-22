@@ -19,6 +19,7 @@ function setScrollPercent(s){
 }
 
 export default function init() {
+    setScrollPercent()
     $(window).off( "scroll", setScrollPercent)
     $(window).on( "scroll", setScrollPercent)
 }
