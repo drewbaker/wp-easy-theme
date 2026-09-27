@@ -6,6 +6,10 @@ function wp_easy_init()
 {
     add_theme_support('title-tag');
     add_theme_support('menus');
+    register_nav_menus(array(
+        'primary' => __('Primary navigation', 'wp-easy'),
+        'footer'  => __('Footer navigation', 'wp-easy'),
+    ));
     add_theme_support('html5', array('gallery', 'caption'));
 
     add_post_type_support('page', 'excerpt');

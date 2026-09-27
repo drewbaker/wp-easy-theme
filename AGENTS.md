@@ -56,6 +56,14 @@ Don't copy parent files into a child unchanged — an unmodified copy just stops
 
 ---
 
+## Navigation
+
+- Menus come from WordPress menu locations registered by this theme: `primary` and `footer`. Render them with `wp_nav_menu(['theme_location' => 'primary', 'container' => 'nav', 'depth' => 1, 'fallback_cb' => false])`.
+- **Never** build navigation with `wp_list_pages()`, `get_pages()`, or a hard-coded list of links — those show every page (including drafts of the page tree and duplicates) instead of the curated menu.
+- The site name/logo links to `home_url('/')`; the front page doesn't also need a "Home" menu item.
+
+---
+
 ## Routing (router.php)
 
 **Do:**
