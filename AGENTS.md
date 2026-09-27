@@ -43,6 +43,19 @@ your-theme/
 
 ---
 
+## Child Themes
+
+This theme is designed to be used as a parent. A child theme (`Template: wp-easy-theme` in its `style.css`) should contain **only the files it changes** — WP-Easy falls back to this theme for everything else:
+
+- `router.php`, `template.php`, `/layouts/`, `/templates/`, `/components/`: a child file replaces the file at the same path.
+- `/styles/*.scss` and `/styles/global/*.scss`: compiled together with this theme's. A same-named child file replaces the parent's (e.g. a child `variables.scss` retunes every color/size variable); new child files compile after the parent's.
+- `/styles/*.css`, `/scripts/*.js`, `/scripts/utils/*.js`, `/scripts/libs/*.js`: loaded alongside this theme's; a same-named child file replaces the parent's.
+- `/images/*.svg` via `use_svg()`: the child's SVG if present, else this theme's.
+
+Don't copy parent files into a child unchanged — an unmodified copy just stops receiving updates to the parent.
+
+---
+
 ## Routing (router.php)
 
 **Do:**
